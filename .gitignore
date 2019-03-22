@@ -2,3 +2,5 @@ node_modules
 npm-debug.log
 
 demos/dist
+.DS_Store
+.invoke
