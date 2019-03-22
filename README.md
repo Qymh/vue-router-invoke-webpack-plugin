@@ -2,6 +2,14 @@
 
 This is a webpack plugin which can automatic generate your `vue-router` path and it is also a `Lint Plugin` which can stronger normalize your file directory
 
+## ToDoList
+
+- [] eslint & commit check
+- [] publish shell
+- [] tests
+- [] resolve meta succedaneum
+- [] 中文文档
+
 ## Install
 
 ### npm
