@@ -35,17 +35,7 @@ const base = {
     new VueRouterInvokePlugin({
       dir: 'demos/src',
       language: 'javascript',
-      ignore: ['images', 'components', 'template.vue'],
-      redirect: [
-        {
-          redirect: '/',
-          path: '/home'
-        },
-        {
-          redirect: '/test',
-          path: '/demo'
-        }
-      ]
+      ignore: ['images', 'components', 'template.vue']
     }),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({

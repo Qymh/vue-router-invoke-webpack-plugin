@@ -4,7 +4,11 @@ const {
   sortFilesAst,
   generateFilesAst
 } = require('./ast');
-const { generateRedirectRoute, writeOrWatchFile } = require('./files');
+const {
+  generateRedirectRoute,
+  generateGuards,
+  writeOrWatchFile
+} = require('./files');
 
 function start(options) {
   init(options);
@@ -13,6 +17,8 @@ function start(options) {
   generateRouteString(this.filesAst);
   generateRedirectRoute(options);
   this.routeString += this.routeStringPost;
+  generateGuards(options);
+  this.routeString += this.routeStringExport;
 }
 
 exports.start = start;

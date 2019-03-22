@@ -32,7 +32,7 @@ function watchFile(options, start) {
 
 exports.writeOrWatchFile = function(options, start) {
   const isDev = process.env.NODE_ENV === 'development';
-  isDev ? watchFile(options, start) : writeFile();
+  isDev ? watchFile(options, start) : writeFile(options);
 };
 
 exports.getRouterDir = function(options) {
@@ -61,12 +61,36 @@ exports.generateIgnoreFiles = function(options) {
 
 exports.generateRedirectRoute = function(options) {
   const { redirect } = options;
+  if (!redirect) {
+    return;
+  }
   for (const item of redirect) {
     this.routeString += `
       {
         path:'${item.path}',
         redirect:'${item.redirect}'
       },
+    `;
+  }
+};
+
+exports.generateGuards = function(options) {
+  if (options.beforeEach) {
+    const str = options.beforeEach.toString();
+    this.routeString += `
+      router.beforeEach(${str});
+    `;
+  }
+  if (options.beforeResolve) {
+    const str = options.beforeResolve.toString();
+    this.routeString += `
+      router.beforeResolve(${str});
+    `;
+  }
+  if (options.afterEach) {
+    const str = options.afterEach.toString();
+    this.routeString += `
+      router.afterEach(${str});
     `;
   }
 };

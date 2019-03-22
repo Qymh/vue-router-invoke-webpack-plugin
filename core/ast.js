@@ -17,8 +17,10 @@ const {
 } = require('./files');
 let routeStringPreJs = `import Vue from 'vue';import Router from 'vue-router';Vue.use(Router);const routes = [`;
 let routeStringPreTs = `import Vue from 'vue';import Router, { RouteConfig } from 'vue-router';Vue.use(Router);const routes: RouteConfig[] = [`;
-let routeStringPostFn = mode =>
-  `];const router = new Router({mode: '${mode}',routes}); export default router;`;
+let routeStringPostFn = (mode, behavior) =>
+  `];const router = new Router({mode: '${mode}',routes,${behavior &&
+    'scrollBehavior:' + behavior}});`;
+let routeStringExport = 'export default router;';
 
 const modeMap = makeMap('hash,history');
 const languageMap = makeMap('javascript,typescript');
@@ -45,13 +47,18 @@ exports.init = function(options) {
       `the language can only be javascript or typescript, make sure you have set the value correctly`
     );
   }
+  let behavior = '';
+  if (options.scrollBehavior) {
+    behavior = options.scrollBehavior.toString();
+  }
   this.routeDir = '';
   this.watchDir = '';
   this.routeString = '';
   this.ignoreRegExp = '';
   this.routeStringPre =
     language === 'javascript' ? routeStringPreJs : routeStringPreTs;
-  this.routeStringPost = routeStringPostFn(mode);
+  this.routeStringPost = routeStringPostFn(mode, behavior);
+  this.routeStringExport = routeStringExport;
   getRouterDir(options);
   generateIgnoreFiles(options);
   getWatchDir(options);
