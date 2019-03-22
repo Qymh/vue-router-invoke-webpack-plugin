@@ -35,7 +35,23 @@ const base = {
     new VueRouterInvokePlugin({
       dir: 'demos/src',
       language: 'javascript',
-      ignore: ['images', 'components', 'template.vue']
+      ignore: ['images', 'components', 'template.vue'],
+      beforeEach: (to, from, next) => {
+        next();
+      },
+      beforeResolve: (to, from, next) => {
+        next();
+      },
+      afterEach: (to, from, next) => {
+        next();
+      },
+      scrollBehavior: (to, from, savedPosition) => {
+        if (savedPosition) {
+          return savedPosition;
+        } else {
+          return { x: 0, y: 0 };
+        }
+      }
     }),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({

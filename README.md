@@ -50,13 +50,18 @@ ToDo
 
 ## Options
 
-| Prop      |  Type  | Required |         Default          |                              Description |
-| --------- | :----: | :------: | :----------------------: | ---------------------------------------: |
-| dir       | String |   true   |            ''            |                       vue file directory |
-| routerdir | String |  false   | 'ROOT/.invoke/router.js' |                 generated router.js file |
-| language  | String |  false   |        javascript        |                 javascript or typescript |
-| ignore    | Array  |  false   |            []            | files or directions will not be resolved |
-| redirect  | Array  |  false   |            []            |                           redirect route |
+| Prop           |   Type   | Required |        Default         |                              Description |
+| -------------- | :------: | :------: | :--------------------: | ---------------------------------------: |
+| mode           |  String  |  false   |        history         |                          hash or history |
+| dir            |  String  |   true   |           ''           |                       vue file directory |
+| routerdir      |  String  |  false   | ROOT/.invoke/router.js |                 generated router.js file |
+| language       |  String  |  false   |       javascript       |                 javascript or typescript |
+| ignore         |  Array   |  false   |           []           | files or directions will not be resolved |
+| redirect       |  Array   |  false   |           []           |                           redirect route |
+| scrollBehavior | Function |  false   |           ''           |                   same as scrollBehavior |
+| beforeEach     | Function |  false   |           ''           |                        router.beforeEach |
+| beforeResolve  | Function |  false   |           ''           |                     router.beforeResolve |
+| afterEach      | Function |  false   |           ''           |                         router.afterEach |
 
 ## How To Automatical Invoke
 
@@ -338,4 +343,80 @@ the automatical route
   path: '/demo',
   redirect: '/test'
 }
+```
+
+### VueRouter Guards
+
+we have supported VueRouter's Guards `beforeEach` `beforeResolve` `afterEach`
+
+If your set options like this
+
+```javascript
+new VueRouterInvokePlugin({
+  dir: 'demos/src',
+  language: 'javascript',
+  beforeEach: (to, from, next) => {
+    next();
+  },
+  beforeResolve: (to, from, next) => {
+    next();
+  },
+  afterEach: (to, from, next) => {
+    next();
+  }
+});
+```
+
+the automatical route
+
+```javascript
+// omit others ...
+const router = new Router({ mode: 'history', routes });
+router.beforeEach((to, from, next) => {
+  next();
+});
+
+router.beforeResolve((to, from, next) => {
+  next();
+});
+
+router.afterEach((to, from, next) => {
+  next();
+});
+export default router;
+```
+
+### ScrollBehavior
+
+If your set options like this
+
+```javascript
+new VueRouterInvokePlugin({
+  dir: 'demos/src',
+  language: 'javascript',
+  scrollBehavior: (to, from, savedPosition) => {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { x: 0, y: 0 };
+    }
+  }
+});
+```
+
+the automatical route
+
+```javascript
+// omit others...
+const router = new Router({
+  mode: 'history',
+  routes,
+  scrollBehavior: (to, from, savedPosition) => {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { x: 0, y: 0 };
+    }
+  }
+});
 ```
