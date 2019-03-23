@@ -72,7 +72,7 @@ module.exports = {
       new VueRouterInvokeWebpackPlugin({
         dir: 'src/views',
         // must set the alias for the dir option which you have set
-        alias:'@/views'
+        alias: '@/views'
       })
     );
   }
@@ -87,7 +87,7 @@ module.exports = {
       new VueRouterInvokeWebpackPlugin({
         dir: 'src/views',
         // must set the alias for the dir option which you have set
-        alias:'@/views
+        alias: '@/views'
       })
     ]
   }
