@@ -4,8 +4,8 @@ This is a webpack plugin which can automatic generate your `vue-router` path and
 
 ## ToDoList
 
-- [] eslint & commit check
-- [] publish shell
+- [x] eslint & commit check
+- [x] publish shell
 - [] tests
 - [] circleci
 - [] resolve meta succedaneum
