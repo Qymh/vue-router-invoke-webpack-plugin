@@ -362,9 +362,7 @@ new VueRouterInvokePlugin({
   beforeResolve: (to, from, next) => {
     next();
   },
-  afterEach: (to, from, next) => {
-    next();
-  }
+  afterEach: (to, from) => {}
 });
 ```
 
@@ -381,9 +379,7 @@ router.beforeResolve((to, from, next) => {
   next();
 });
 
-router.afterEach((to, from, next) => {
-  next();
-});
+router.afterEach((to, from) => {});
 export default router;
 ```
 

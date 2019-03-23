@@ -8,6 +8,7 @@
   "main": "core/index.js",
   "license": "MIT",
   "scripts": {
+    "check": "yarn upgrade-interactive --latest",
     "lint:corejs": "eslint \"core/**/*.js\"",
     "lint:demosjs": "eslint \"demos/**/*.{js,vue} \"",
     "lint:js": "npm run lint:corejs && npm run lint:demosjs",
@@ -17,15 +18,15 @@
     "build:demos": "cross-env NODE_ENV=production webpack --config demos/webpack.config.js"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.2.5",
-    "vue": "^2.6.8",
+    "@babel/polyfill": "^7.4.0",
+    "vue": "^2.6.10",
     "vue-router": "^3.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.3.4",
+    "@babel/core": "^7.4.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-env": "^7.4.2",
     "babel-loader": "^8.0.5",
     "cross-env": "^5.2.0",
     "eslint": "^5.15.3",
@@ -42,9 +43,9 @@
     "stylelint": "^9.10.1",
     "stylelint-config-standard": "^18.2.0",
     "vue-loader": "^15.7.0",
-    "vue-template-compiler": "^2.6.8",
+    "vue-template-compiler": "^2.6.10",
     "webpack": "^4.29.6",
-    "webpack-cli": "^3.2.3",
+    "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.2.1"
   }
 }

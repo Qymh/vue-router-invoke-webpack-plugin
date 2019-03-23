@@ -42,9 +42,7 @@ const base = {
       beforeResolve: (to, from, next) => {
         next();
       },
-      afterEach: (to, from, next) => {
-        next();
-      },
+      afterEach: (to, from) => {},
       scrollBehavior: (to, from, savedPosition) => {
         if (savedPosition) {
           return savedPosition;
