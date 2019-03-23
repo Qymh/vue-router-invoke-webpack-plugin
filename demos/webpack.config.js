@@ -73,6 +73,7 @@ if (isDev) {
     publicPath: '/',
     inline: true,
     quiet: true,
+    open: true,
     clientLogLevel: 'warning',
     historyApiFallback: true
   };
