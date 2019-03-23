@@ -77,6 +77,22 @@ plugins: [
 ];
 ```
 
+And import `router.js` in your entry file like `app.js` or `main.js`
+
+The default location of `router.js` is under the invoke folder in the root directory,You can change the location anywhere by setting the `routerdir` option
+
+```javascript
+import Vue from 'vue';
+import App from './App.vue';
+import router from '../.invoke/router';
+
+export default new Vue({
+  el: '#app',
+  router,
+  render: h => h(App)
+});
+```
+
 ### SingleRoute
 
 If your directory just like this
