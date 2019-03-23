@@ -72,7 +72,7 @@ module.exports = {
       new VueRouterInvokeWebpackPlugin({
         dir: 'src/views',
         // must set the alias for the dir option which you have set
-        alias:'@/src/views
+        alias:'@/views
       })
     );
   }
@@ -86,7 +86,8 @@ module.exports = {
     plugins: [
       new VueRouterInvokeWebpackPlugin({
         dir: 'src/views',
-        alias:'@/src/views
+        // must set the alias for the dir option which you have set
+        alias:'@/views
       })
     ]
   }
@@ -114,9 +115,17 @@ module.exports = {
 The following example depends on the same options
 
 ```javascript
+
+resolve: {
+  alias: {
+    '@src': path.resolve(process.cwd(), 'demos/src')
+  }
+}
+
 plugins: [
   new VueRouterInvokePlugin({
     dir: 'demos/src',
+    alias: '@src',
     language: 'javascript'
   })
 ];
@@ -160,25 +169,25 @@ automatical generated route will be this
 ```javascript
 {
   component: () =>
-    import('/Users/qymh/Documents/vue-router-invoke-webpack-plugin/demos/src/Login/Index.vue'),
+    import('@src/Login/Index.vue'),
   name: 'login',
   path: '/login'
 },
 {
   component: () =>
-    import('/Users/qymh/Documents/vue-router-invoke-webpack-plugin/demos/src/User/Index.vue'),
+    import('@src/User/Index.vue'),
   name: 'user',
   path: '/user'
 },
 {
   component: () =>
-    import('/Users/qymh/Documents/vue-router-invoke-webpack-plugin/demos/src/User/Account/Index.vue'),
+    import('@src/User/Account/Index.vue'),
   name: 'user-account',
   path: '/user/account'
 },
 {
   component: () =>
-    import('/Users/qymh/Documents/vue-router-invoke-webpack-plugin/demos/src/User/Home/Index.vue'),
+    import('@src/User/Home/Index.vue'),
   name: 'user-home',
   path: '/user/home'
 }
@@ -204,19 +213,19 @@ automatical generated route will be this
 ```javascript
 {
   component: () =>
-    import('/Users/qymh/Documents/vue-router-invoke-webpack-plugin/demos/src/Login/Index.vue'),
+    import('@src/Login/Index.vue'),
   name: 'login',
   path: '/login'
 },
 {
   component: () =>
-    import('/Users/qymh/Documents/vue-router-invoke-webpack-plugin/demos/src/User/Index.vue'),
+    import('@src/User/Index.vue'),
   name: 'user',
   path: '/user'
 },
 {
   component: () =>
-    import('/Users/qymh/Documents/vue-router-invoke-webpack-plugin/demos/src/User/:Home/Index.vue'),
+    import('@src/User/:Home/Index.vue'),
   name: 'user-home',
   path: '/user/:home'
 }
@@ -244,25 +253,25 @@ automatical generated route will be this
 ```javascript
 {
   component: () =>
-    import('/Users/qymh/Documents/vue-router-invoke-webpack-plugin/demos/src/Login/Index.vue'),
+    import('@src/Login/Index.vue'),
   name: 'login',
   path: '/login'
 },
 {
   component: () =>
-    import('/Users/qymh/Documents/vue-router-invoke-webpack-plugin/demos/src/User/User.vue'),
+    import('@src/User/User.vue'),
   name: 'user',
   path: '/user',
   children: [
     {
       component: () =>
-        import('/Users/qymh/Documents/vue-router-invoke-webpack-plugin/demos/src/User/Chart/Index.vue'),
+        import('@src/User/Chart/Index.vue'),
       name: 'user-chart',
       path: 'chart'
     },
     {
       component: () =>
-        import('/Users/qymh/Documents/vue-router-invoke-webpack-plugin/demos/src/User/Home/Index.vue'),
+        import('@src/User/Home/Index.vue'),
       name: 'user-home',
       path: 'home'
     }
@@ -292,25 +301,25 @@ automatical generated route will be this
 ```javascript
 {
     component: () =>
-      import('/Users/qymh/Documents/vue-router-invoke-webpack-plugin/demos/src/Login/Index.vue'),
+      import('@src/Login/Index.vue'),
     name: 'login',
     path: '/login'
   },
   {
     component: () =>
-      import('/Users/qymh/Documents/vue-router-invoke-webpack-plugin/demos/src/User/Index.vue'),
+      import('@src/User/Index.vue'),
     name: 'user',
     path: '/user'
   },
   {
     component: () =>
-      import('/Users/qymh/Documents/vue-router-invoke-webpack-plugin/demos/src/User/:Category/:Category.vue'),
+      import('@src/User/:Category/:Category.vue'),
     name: 'user-category',
     path: '/user/:category',
     children: [
       {
         component: () =>
-          import('/Users/qymh/Documents/vue-router-invoke-webpack-plugin/demos/src/User/:Category/Infor/Index.vue'),
+          import('@src/User/:Category/Infor/Index.vue'),
         name: 'user-category-infor',
         path: 'infor'
       }
@@ -357,13 +366,13 @@ the automatical route
 ```javascript
 {
   component: () =>
-    import('/Users/qymh/Documents/vue-router-invoke-webpack-plugin/demos/src/Login/Index.vue'),
+    import('@src/Login/Index.vue'),
   name: 'login',
   path: '/login'
 },
 {
   component: () =>
-    import('/Users/qymh/Documents/vue-router-invoke-webpack-plugin/demos/src/User/Index.vue'),
+    import('@src/User/Index.vue'),
   name: 'user',
   path: '/user'
 }

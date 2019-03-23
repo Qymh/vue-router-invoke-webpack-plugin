@@ -99,8 +99,7 @@ function generateFilesAst(dir, filesAst, parent) {
       const fileLowerCase = lowerCase(file);
       const curDir = `${root}/${dir}/${file}`;
       curAst.dir = curDir;
-      curAst.alias =
-        this.alias && `${this.alias}${replaceAlias(dir, this.dir)}/${file}`;
+      curAst.alias = `${this.alias}${replaceAlias(dir, this.dir)}/${file}`;
       curAst.file = camelize(replaceVue(fileLowerCase));
       curAst.isFile = isFile(curDir);
       if (parent) {
