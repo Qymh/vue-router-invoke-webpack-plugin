@@ -47,7 +47,35 @@ plugins: [new VueRouterInvokePlugin()];
 
 ### VueCli3
 
-ToDo
+`vue.config.js`
+
+```javascript
+const VueRouterInvokeWebpackPlugin = require('vue-router-invoke-webpack-plugin');
+
+module.exports = {
+  // omit other options...
+  configureWebpack(config) {
+    config.plugins.push(
+      new VueRouterInvokeWebpackPlugin({
+        dir: 'src/views'
+      })
+    );
+  }
+};
+
+// or another way..
+
+module.exports = {
+  // omit other options...
+  configureWebpack: {
+    plugins: [
+      new VueRouterInvokeWebpackPlugin({
+        dir: 'src/views'
+      })
+    ]
+  }
+};
+```
 
 ## Options
 
