@@ -72,6 +72,10 @@ exports.init = function(options) {
  * @param {Object} parent
  */
 function generateFilesAst(dir, filesAst, parent) {
+  if (!dir) {
+    warn(`the dir option is required please set the main files of vue`);
+    return;
+  }
   const files = fs.readdirSync(dir);
   if (!files.length && !parent) {
     warn(
