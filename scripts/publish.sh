@@ -23,7 +23,7 @@ npm run lint
 log "publish ${VERSION}"
 
 npm config set registry http://registry.npmjs.org 
-npm version $VERSION --message "feature => release ${VERSION}"
+npm version $VERSION --message "feature => release $VERSION"
 
 git push origin master
 git push origin v$VERSION
