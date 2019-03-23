@@ -5,7 +5,7 @@ class VueRouterInvokeWebpackPlugin {
   }
 
   apply(compiler) {
-    compiler.hooks.entryOption.tap('invoke', (a, b) => {
+    compiler.hooks.entryOption.tap('invoke', () => {
       invoke(this.$options);
     });
   }

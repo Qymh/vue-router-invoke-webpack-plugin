@@ -17,6 +17,9 @@ then
   exit
 fi
 
+log "code review"
+npm run lint
+
 log "publish ${VERSION}"
 
 npm config set registry http://registry.npmjs.org 

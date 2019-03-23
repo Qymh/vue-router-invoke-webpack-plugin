@@ -80,7 +80,7 @@ if (isDev) {
   };
 
   base.plugins.push(
-    // new Progress(),
+    new Progress(),
     new webpack.DefinePlugin({
       process: {
         env: {

@@ -4,7 +4,6 @@ const {
   camelize,
   replaceVue,
   lowerCase,
-  hyphenate,
   replaceDynamic,
   makeMap
 } = require('./utils');

@@ -9,7 +9,7 @@ exports.root = root;
 function writeFile(options) {
   if (!fs.existsSync(this.routerDir)) {
     if (options.routerDir) {
-      fs.mkdirSync(`${root}/${routerDir}/.invoke`, { recursive: true });
+      fs.mkdirSync(`${root}/${options.routerDir}/.invoke`, { recursive: true });
     } else {
       fs.mkdirSync(`${root}/.invoke`, { recursive: true });
     }
@@ -54,7 +54,7 @@ exports.getWatchDir = function(options) {
 };
 
 exports.generateIgnoreFiles = function(options) {
-  options.ignore = options.ignore.map(v => (v = v.replace(/([\.])/g, '\\$1')));
+  options.ignore = options.ignore.map(v => (v = v.replace(/([\\.])/g, '\\$1')));
   let reg = new RegExp(`(${options.ignore.join('|')})`, 'gi');
   this.ignoreRegExp = reg;
 };

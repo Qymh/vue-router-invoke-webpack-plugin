@@ -1,0 +1,60 @@
+{
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": [
+    "standard",
+    "plugin:prettier/recommended",
+    "plugin:vue/essential",
+    "plugin:vue/strongly-recommended",
+    "plugin:vue/recommended"
+  ],
+  "rules": {
+    "prettier/prettier": "error",
+    "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+    "space-before-function-paren": ["error", "never"],
+    "prefer-promise-reject-errors": "off",
+    "no-new": "off",
+    "no-console": "error",
+    "no-debugger": "error",
+    "brace-style": [0],
+    "vue/html-self-closing": [
+      "error",
+      {
+        "html": {
+          "void": "any"
+        }
+      }
+    ],
+    "vue/html-closing-bracket-spacing": [0],
+    "vue/max-attributes-per-line": [0],
+    "vue/attribute-hyphenation": ["error", "never"],
+    "vue/order-in-components": [
+      "error",
+      {
+        "order": [
+          "el",
+          "name",
+          "parent",
+          "functional",
+          ["delimiters", "comments"],
+          ["components", "directives", "filters"],
+          "extends",
+          "mixins",
+          "inheritAttrs",
+          "model",
+          "data",
+          ["props", "propsData"],
+          "computed",
+          "watch",
+          "LIFECYCLE_HOOKS",
+          "methods",
+          ["template", "render"],
+          "renderError"
+        ]
+      }
+    ],
+    "vue/no-v-html": [0]
+  }
+}
