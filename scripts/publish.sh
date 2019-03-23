@@ -24,6 +24,7 @@ log "publish ${VERSION}"
 
 npm config set registry http://registry.npmjs.org 
 npm version $VERSION --message "feature => release $VERSION"
+npm publish
 
 git push origin master
 git push origin v$VERSION
