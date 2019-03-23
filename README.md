@@ -35,14 +35,27 @@ yarn add vue-router-invoke-webpack-plugin -D
 
 ### Webpack
 
-make sure you have set process.env.NODE_ENV in development environment is equal to `development` and in production environment is equal to `production`.You can do that by using `cross-env` or some others plugin.
+- make sure you have set process.env.NODE_ENV in development environment is equal to `development` and in production environment is equal to `production`.You can do that by using `cross-env` or some others plugin.
+- make sure you have set the alias for `dir` option.
 
 ```javascript
 const VueRouterInvokePlugin = require('vue-router-invoke-webpack-plugin');
+const path = require('path')
 
 // omit some others option...
 
-plugins: [new VueRouterInvokePlugin()];
+resolve: {
+  alias: {
+    '@src': path.resolve(process.cwd(), 'demos/src')
+  }
+}
+
+plugins: [
+  new VueRouterInvokePlugin(
+    dir: 'demos/src',
+    alias: '@src'
+  )
+];
 ```
 
 ### VueCli3
@@ -57,7 +70,9 @@ module.exports = {
   configureWebpack(config) {
     config.plugins.push(
       new VueRouterInvokeWebpackPlugin({
-        dir: 'src/views'
+        dir: 'src/views',
+        // must set the alias for the dir option which you have set
+        alias:'@/src/views
       })
     );
   }
@@ -70,7 +85,8 @@ module.exports = {
   configureWebpack: {
     plugins: [
       new VueRouterInvokeWebpackPlugin({
-        dir: 'src/views'
+        dir: 'src/views',
+        alias:'@/src/views
       })
     ]
   }
@@ -81,8 +97,9 @@ module.exports = {
 
 | Prop           |   Type   | Required |        Default         |                              Description |
 | -------------- | :------: | :------: | :--------------------: | ---------------------------------------: |
-| mode           |  String  |  false   |        history         |                          hash or history |
 | dir            |  String  |   true   |           ''           |                       vue file directory |
+| alias          |  String  |   true   |           ''           |                 the option `dir`'s alias |
+| mode           |  String  |  false   |        history         |                          hash or history |
 | routerdir      |  String  |  false   | ROOT/.invoke/router.js |                 generated router.js file |
 | language       |  String  |  false   |       javascript       |                 javascript or typescript |
 | ignore         |  Array   |  false   |           []           | files or directions will not be resolved |

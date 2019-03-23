@@ -6,6 +6,10 @@ exports.warn = msg => {
 
 exports.lowerCase = str => str.toLowerCase();
 
+exports.replaceAlias = (str, dir) => {
+  return str.replace(new RegExp(dir, 'gi'), '');
+};
+
 exports.replaceVue = str => str.replace(/\.vue/g, '');
 
 exports.camelize = str =>

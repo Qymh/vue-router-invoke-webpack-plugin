@@ -5,6 +5,7 @@ const {
   replaceVue,
   lowerCase,
   replaceDynamic,
+  replaceAlias,
   makeMap
 } = require('./utils');
 const {
@@ -46,6 +47,17 @@ exports.init = function(options) {
       `the language can only be javascript or typescript, make sure you have set the value correctly`
     );
   }
+  if (!options.dir) {
+    warn(`the dir option is required please set the main files of vue`);
+    return;
+  }
+  if (!options.alias) {
+    warn(
+      `the alias option is required, make sure you have set the alias of the dir option: ${
+        options.dir
+      } `
+    );
+  }
   let behavior = '';
   if (options.scrollBehavior) {
     behavior = options.scrollBehavior.toString();
@@ -58,6 +70,8 @@ exports.init = function(options) {
     language === 'javascript' ? routeStringPreJs : routeStringPreTs;
   this.routeStringPost = routeStringPostFn(mode, behavior);
   this.routeStringExport = routeStringExport;
+  this.alias = options.alias;
+  this.dir = options.dir;
   getRouterDir(options);
   generateIgnoreFiles(options);
   getWatchDir(options);
@@ -72,10 +86,6 @@ exports.init = function(options) {
  * @param {Object} parent
  */
 function generateFilesAst(dir, filesAst, parent) {
-  if (!dir) {
-    warn(`the dir option is required please set the main files of vue`);
-    return;
-  }
   const files = fs.readdirSync(dir);
   if (!files.length && !parent) {
     warn(
@@ -89,6 +99,8 @@ function generateFilesAst(dir, filesAst, parent) {
       const fileLowerCase = lowerCase(file);
       const curDir = `${root}/${dir}/${file}`;
       curAst.dir = curDir;
+      curAst.alias =
+        this.alias && `${this.alias}${replaceAlias(dir, this.dir)}/${file}`;
       curAst.file = camelize(replaceVue(fileLowerCase));
       curAst.isFile = isFile(curDir);
       if (parent) {
@@ -137,7 +149,7 @@ function generateRouteString(filesAst, pre) {
     } else {
       this.routeString += `
       {
-        component: () => import('${item.dir}'),
+        component: () => import('${this.alias ? item.alias : item.dir}'),
         name:'${replaceDynamic(item.parentName.join('-'))}',
         `;
       if (pre && nestCollections[pre.parentName.join('-')] !== undefined) {

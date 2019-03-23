@@ -29,11 +29,16 @@ const base = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.vue']
+    extensions: ['.js', '.vue'],
+    alias: {
+      '@src': path.resolve(__dirname, './src')
+    }
   },
   plugins: [
     new VueRouterInvokePlugin({
       dir: 'demos/src',
+      alias: '@src',
+      ignore: ['template.vue'],
       language: 'javascript'
     }),
     new VueLoaderPlugin(),
