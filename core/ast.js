@@ -79,7 +79,8 @@ function generateFilesAst(dir, filesAst, parent) {
     );
   }
   for (const file of files) {
-    if (!this.ignoreRegExp.test(file)) {
+    if (this.ignoreRegExp && this.ignoreRegExp.test(file)) {
+    } else {
       const curAst = {};
       const fileLowerCase = lowerCase(file);
       const curDir = `${root}/${dir}/${file}`;

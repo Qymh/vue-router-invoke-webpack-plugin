@@ -54,6 +54,9 @@ exports.getWatchDir = function(options) {
 };
 
 exports.generateIgnoreFiles = function(options) {
+  if (!options.ignore) {
+    return;
+  }
   options.ignore = options.ignore.map(v => (v = v.replace(/([\\.])/g, '\\$1')));
   let reg = new RegExp(`(${options.ignore.join('|')})`, 'gi');
   this.ignoreRegExp = reg;
