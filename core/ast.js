@@ -1,3 +1,5 @@
+'use strict';
+
 const fs = require('fs');
 const {
   warn,
@@ -34,7 +36,7 @@ let nestCollections = {};
 /**
  * @param {Object} options
  */
-exports.init = function(options) {
+function init(options) {
   let mode = options.mode || 'history';
   let language = options.language || 'javascript';
   if (!modeMap(mode)) {
@@ -62,7 +64,7 @@ exports.init = function(options) {
   if (options.scrollBehavior) {
     behavior = options.scrollBehavior.toString();
   }
-  this.routeDir = '';
+  this.routerDir = '';
   this.watchDir = '';
   this.routeString = '';
   this.ignoreRegExp = '';
@@ -72,12 +74,14 @@ exports.init = function(options) {
   this.routeStringExport = routeStringExport;
   this.alias = options.alias;
   this.dir = options.dir;
-  getRouterDir(options);
-  generateIgnoreFiles(options);
-  getWatchDir(options);
+  getRouterDir.call(this, options);
+  generateIgnoreFiles.call(this, options);
+  getWatchDir.call(this, options);
   this.routeString += this.routeStringPre;
   this.filesAst = [];
-};
+}
+
+exports.init = init;
 
 /**
  *
@@ -111,7 +115,7 @@ function generateFilesAst(dir, filesAst, parent) {
       filesAst.push(curAst);
       if (!curAst.isFile) {
         curAst.children = [];
-        generateFilesAst(`${dir}/${file}`, curAst.children, curAst);
+        generateFilesAst.call(this, `${dir}/${file}`, curAst.children, curAst);
       }
     }
   }
@@ -125,7 +129,7 @@ function sortFilesAst(filesAst) {
   sortByIsFile(filesAst);
   for (const item of filesAst) {
     if (item.children) {
-      sortFilesAst(item.children);
+      sortFilesAst.call(this, item.children);
     }
   }
 }
@@ -144,7 +148,7 @@ function generateRouteString(filesAst, pre) {
       if (nestCollections[item.parentName.join('-')]) {
         nestCollections[item.parentName.join('-')]--;
       }
-      generateRouteString(item.children, item);
+      generateRouteString.call(this, item.children, item);
     } else {
       this.routeString += `
       {

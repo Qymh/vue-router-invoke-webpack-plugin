@@ -1,3 +1,5 @@
+'use strict';
+
 const fs = require('fs');
 
 const isFile = dir => fs.statSync(dir).isFile();
@@ -32,7 +34,7 @@ function watchFile(options, start) {
 
 exports.writeOrWatchFile = function(options, start) {
   const isDev = process.env.NODE_ENV === 'development';
-  isDev ? watchFile(options, start) : writeFile(options);
+  isDev ? watchFile.call(this, options, start) : writeFile.call(this, options);
 };
 
 exports.getRouterDir = function(options) {
