@@ -1,3 +1,5 @@
+'use strict';
+
 const {
   init,
   generateRouteString,
@@ -11,19 +13,19 @@ const {
 } = require('./files');
 
 function start(options) {
-  init(options);
-  generateFilesAst(options.dir, this.filesAst, '');
-  sortFilesAst(this.filesAst);
-  generateRouteString(this.filesAst);
-  generateRedirectRoute(options);
+  init.call(this, options);
+  generateFilesAst.call(this, options.dir, this.filesAst, '');
+  sortFilesAst.call(this, this.filesAst);
+  generateRouteString.call(this, this.filesAst);
+  generateRedirectRoute.call(this, options);
   this.routeString += this.routeStringPost;
-  generateGuards(options);
+  generateGuards.call(this, options);
   this.routeString += this.routeStringExport;
 }
 
 exports.start = start;
 
 exports.invoke = function(options) {
-  start(options);
-  writeOrWatchFile(options, start);
+  start.call(this, options);
+  writeOrWatchFile.call(this, options, start);
 };

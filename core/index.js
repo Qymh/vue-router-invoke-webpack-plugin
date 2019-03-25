@@ -1,12 +1,15 @@
+'use strict';
+
 const { invoke } = require('./invoke');
 class VueRouterInvokeWebpackPlugin {
   constructor(options) {
     this.$options = options;
+    this.routerDir = '';
   }
 
   apply(compiler) {
     compiler.hooks.entryOption.tap('invoke', () => {
-      invoke(this.$options);
+      invoke.call(this, this.$options);
     });
   }
 }
