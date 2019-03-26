@@ -22,19 +22,16 @@ describe('option', () => {
       alias: '@/src'
     });
   });
-
   it('must have dir', () => {
     expect(() => {
       testPlugin();
     }).toThrow();
   });
-
   it('must have alias', () => {
     expect(() => {
       testPlugin({ dir: 'demos/src' });
     }).toThrow();
   });
-
   it('mode should be hash or history', () => {
     expect(() => {
       testPlugin({
@@ -44,7 +41,6 @@ describe('option', () => {
       });
     }).toThrow();
   });
-
   it('language should be javascript or typescript', () => {
     expect(() => {
       testPlugin({
@@ -54,7 +50,6 @@ describe('option', () => {
       });
     }).toThrow();
   });
-
   it('behavior', () => {
     testPlugin({
       dir: 'demos/src',
