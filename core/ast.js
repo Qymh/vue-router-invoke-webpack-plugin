@@ -97,26 +97,23 @@ function generateFilesAst(dir, filesAst, parent) {
     );
   }
   for (const file of files) {
-    if (this.ignoreRegExp && this.ignoreRegExp.test(file)) {
+    const curAst = {};
+    const fileLowerCase = lowerCase(file);
+    const curDir = `${root}/${dir}/${file}`;
+    curAst.dir = curDir;
+    curAst.alias = `${this.alias}${replaceAlias(dir, this.dir)}/${file}`;
+    curAst.file = camelize(replaceVue(fileLowerCase));
+    curAst.isFile = isFile(curDir);
+    if (parent) {
+      curAst.isNest = curAst.file.trim() === camelize(parent.file).trim();
+      curAst.parentName = parent.parentName.concat(parent.file);
     } else {
-      const curAst = {};
-      const fileLowerCase = lowerCase(file);
-      const curDir = `${root}/${dir}/${file}`;
-      curAst.dir = curDir;
-      curAst.alias = `${this.alias}${replaceAlias(dir, this.dir)}/${file}`;
-      curAst.file = camelize(replaceVue(fileLowerCase));
-      curAst.isFile = isFile(curDir);
-      if (parent) {
-        curAst.isNest = curAst.file.trim() === camelize(parent.file).trim();
-        curAst.parentName = parent.parentName.concat(parent.file);
-      } else {
-        curAst.parentName = [];
-      }
-      filesAst.push(curAst);
-      if (!curAst.isFile) {
-        curAst.children = [];
-        generateFilesAst.call(this, `${dir}/${file}`, curAst.children, curAst);
-      }
+      curAst.parentName = [];
+    }
+    filesAst.push(curAst);
+    if (!curAst.isFile) {
+      curAst.children = [];
+      generateFilesAst.call(this, `${dir}/${file}`, curAst.children, curAst);
     }
   }
 }
@@ -144,33 +141,39 @@ function generateRouteString(filesAst, pre) {
     nestCollections = [];
   }
   for (const item of filesAst) {
-    if (!item.isFile) {
-      if (nestCollections[item.parentName.join('-')]) {
-        nestCollections[item.parentName.join('-')]--;
-      }
-      generateRouteString.call(this, item.children, item);
+    if (
+      this.ignoreRegExp.test(item.file) ||
+      (item.parentName && this.ignoreRegExp.test(item.parentName.join('')))
+    ) {
     } else {
-      this.routeString += `
-      {
-        component: () => import('${this.alias ? item.alias : item.dir}'),
-        name:'${replaceDynamic(item.parentName.join('-'))}',
-        `;
-      if (pre && nestCollections[pre.parentName.join('-')] !== undefined) {
-        this.routeString += `path:'${pre.file}',`;
+      if (!item.isFile) {
+        if (nestCollections[item.parentName.join('-')]) {
+          nestCollections[item.parentName.join('-')]--;
+        }
+        generateRouteString.call(this, item.children, item);
       } else {
-        this.routeString += `path:'/${item.parentName.join('/')}',`;
-      }
-      if (item.isNest) {
-        nestCollections[item.parentName.join('-')] = pre.children.length - 1;
-        this.routeString += `children:[`;
-        if (pre.children.length - 1 === 0) {
+        this.routeString += `
+        {
+          component: () => import('${this.alias ? item.alias : item.dir}'),
+          name:'${replaceDynamic(item.parentName.join('-'))}',
+          `;
+        if (pre && nestCollections[pre.parentName.join('-')] !== undefined) {
+          this.routeString += `path:'${pre.file}',`;
+        } else {
+          this.routeString += `path:'/${item.parentName.join('/')}',`;
+        }
+        if (item.isNest) {
+          nestCollections[item.parentName.join('-')] = pre.children.length - 1;
+          this.routeString += `children:[`;
+          if (pre.children.length - 1 === 0) {
+            this.routeString += '],},';
+          }
+        } else {
+          this.routeString += '},';
+        }
+        if (pre && nestCollections[pre.parentName.join('-')] === 0) {
           this.routeString += '],},';
         }
-      } else {
-        this.routeString += '},';
-      }
-      if (pre && nestCollections[pre.parentName.join('-')] === 0) {
-        this.routeString += '],},';
       }
     }
   }

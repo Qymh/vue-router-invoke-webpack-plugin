@@ -1,7 +1,7 @@
 'use strict';
 
 const fs = require('fs');
-
+const { replaceVue } = require('./utils');
 const isFile = dir => fs.statSync(dir).isFile();
 exports.isFile = isFile;
 
@@ -59,8 +59,8 @@ exports.generateIgnoreFiles = function(options) {
   if (!options.ignore) {
     return;
   }
-  options.ignore = options.ignore.map(v => (v = v.replace(/([\\.])/g, '\\$1')));
-  let reg = new RegExp(`(${options.ignore[0].split(',').join('|')})`, 'gi');
+  options.ignore = options.ignore.map(replaceVue);
+  let reg = new RegExp(`(${options.ignore.join('|')})`, 'ig');
   this.ignoreRegExp = reg;
 };
 
