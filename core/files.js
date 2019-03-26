@@ -60,7 +60,7 @@ exports.generateIgnoreFiles = function(options) {
     return;
   }
   options.ignore = options.ignore.map(v => (v = v.replace(/([\\.])/g, '\\$1')));
-  let reg = new RegExp(`(${options.ignore.join('|')})`, 'gi');
+  let reg = new RegExp(`(${options.ignore[0].split(',').join('|')})`, 'gi');
   this.ignoreRegExp = reg;
 };
 
