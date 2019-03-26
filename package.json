@@ -16,7 +16,7 @@
     "lint": "npm run lint:js && npm run lint:style",
     "dev:demos": "cross-env NODE_ENV=development webpack-dev-server --config demos/webpack.config.js",
     "build:demos": "cross-env NODE_ENV=production webpack --config demos/webpack.config.js",
-    "test": "jest --coverage",
+    "test": "jest --coverage --watchAll",
     "test:single": "jest --coverage",
     "pub": "bash scripts/publish.sh"
   },
