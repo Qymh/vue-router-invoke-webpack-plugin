@@ -33,7 +33,7 @@ const base = {
     new VueRouterInvokePlugin({
       dir: 'demos/src',
       alias: '@src',
-      ignore: ['template.vue'],
+      ignore: ['images', 'template.vue'],
       language: 'javascript'
     }),
     new VueLoaderPlugin(),
