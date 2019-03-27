@@ -8,7 +8,8 @@ const {
   lowerCase,
   replaceDynamic,
   replaceAlias,
-  makeMap
+  makeMap,
+  diff
 } = require('./utils');
 const {
   isFile,
@@ -155,8 +156,10 @@ function generateRouteString(filesAst, pre) {
           component: () => import('${item.alias}'),
           name:'${replaceDynamic(item.parentName.join('-'))}',
           `;
-        if (pre && nestCollections[pre.parentName.join('-')] !== undefined) {
-          this.routeString += `path:'${pre.file}',`;
+        if (Object.keys(nestCollections).length) {
+          const curNest = this.nestArr[this.nestArr.length - 1].split('-');
+          const res = diff(curNest, item.parentName);
+          this.routeString += `path:'${res.join('/')}',`;
         } else {
           this.routeString += `path:'/${item.parentName.join('/')}',`;
         }
@@ -170,16 +173,16 @@ function generateRouteString(filesAst, pre) {
         } else {
           this.routeString += '},';
         }
-        const bool = this.nestArr.some(v =>
+        const isNestChild = this.nestArr.some(v =>
           pre.parentName.join('-').includes(v)
         );
-        if (bool) {
+        if (isNestChild) {
           this.nestArr.forEach(v => {
             if (pre.parentName.join('-').includes(v)) {
               nestCollections[v]--;
             }
           });
-          if (item.isNest) {
+          if (pre.children.length >= 2) {
             nestCollections[pre.parentName.join('-')]++;
           }
           let count = 0;

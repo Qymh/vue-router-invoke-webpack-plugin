@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const tests = path.resolve(process.cwd(), 'tests');
-const rimraf = require('./rimraf');
+const rimraf = require('rimraf');
 
 exports.makeFile = str => {
   str = str.split('/');

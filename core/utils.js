@@ -26,3 +26,8 @@ exports.makeMap = str => {
 };
 
 exports.replaceDynamic = str => str.replace(/:/g, '');
+
+exports.diff = (a, b) => {
+  const aSet = new Set(a);
+  return b.filter(v => !aSet.has(v));
+};

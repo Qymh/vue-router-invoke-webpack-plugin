@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
-const rimraf = require('./utils/rimraf');
+const rimraf = require('rimraf');
 const VueRouterInvokeWebpackPlugin = require('../core');
 const { makeFile, removeFile } = require('./utils');
 function testPlugin(options, expectVal, notExpectVal) {
@@ -80,6 +80,7 @@ describe('option', () => {
         new VueRouterInvokeWebpackPlugin({ dir: 'demos/src', alias: '@/src' })
       ]
     });
+    rimraf.sync(path.resolve(process.cwd(), '.invoke'));
   });
 
   it('language should be javascript or typescript', () => {
