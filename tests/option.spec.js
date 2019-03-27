@@ -215,7 +215,8 @@ describe('option', () => {
           new RegExp(`name\\:\\'watch\\',path\\:\\'\\/watch\\'`).test(file)
         );
         fs.writeFileSync(
-          path.resolve(process.cwd(), 'tests/single/Login/Index.vue', 123)
+          path.resolve(process.cwd(), 'tests/single/Login/Index.vue'),
+          456
         );
         removeFile('single/watch');
         resolve();
