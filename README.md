@@ -46,14 +46,14 @@ const path = require('path')
 
 resolve: {
   alias: {
-    '@src': path.resolve(process.cwd(), 'demos/src')
+    '@': path.resolve(process.cwd(), 'demos')
   }
 }
 
 plugins: [
   new VueRouterInvokePlugin(
     dir: 'demos/src',
-    alias: '@src'
+    alias: '@/src'
   )
 ];
 ```
@@ -328,6 +328,68 @@ automatical generated route will be this
   }
 ```
 
+## Strong Lint
+
+As the title of our repository shows.This is also a lint plugin.
+
+Whatever the file you named.
+
+- `upperCamelCase` SomeName
+- `hyphenate` some-name
+- `underline` some_name
+
+Or
+
+- `uppercase` SOMENAME
+- `lowercase` some-name
+
+it will all be escaped to `UpperCamelCase` in the generated `router.js`
+
+And multistage route's name will be hyphenated. So it is obvious you can differentiate the hierarchical state of the route.
+
+For Example
+
+```
+src
+├── views
+│   ├── LoginPage
+│   │   └── index.vue
+│   └── User-home
+│       ├── account
+│       │   └── Index.vue
+│       ├── Home-details
+│       │   └── Index.vue
+│       └── Index.vue
+```
+
+automatical generated route will be this
+
+````javascript
+{
+  component: () => import('@/src/LoginPage/index.vue'),
+  name: 'loginPage',
+  path: '/loginPage'
+},
+{
+  component: () => import('@/src/User-home/Index.vue'),
+  name: 'userHome',
+  path: '/userHome'
+},
+{
+  component: () => import('@/src/User-home/Home-details/Index.vue'),
+  name: 'userHome-homeDetails',
+  path: '/userHome/homeDetails'
+},
+{
+  component: () => import('@/src/User-home/account/Index.vue'),
+  name: 'userHome-account',
+  path: '/userHome/account'
+},
+
+## Demos
+
+The detailed usage you can `git clone` our project and run `npm run build:demos` or you can just watch our [demos](https://github.com/Qymh/vue-router-invoke-webpack-plugin/tree/master/demos) directly.The demos dont't have substantial content,the more we focus is on the generation of directory,you can get how `router.js` generated in the demos.
+
 ## Meta Succedaneum
 
 ToDo
@@ -351,7 +413,7 @@ plugins: [
     ignore: ['images', 'components', 'template.vue']
   })
 ];
-```
+````
 
 the directory
 
