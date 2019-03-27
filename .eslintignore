@@ -1,1 +1,2 @@
 demos/dist
+tests/utils/rimraf.js

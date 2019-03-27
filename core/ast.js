@@ -51,7 +51,6 @@ function init(options) {
   }
   if (!options.dir) {
     warn(`the dir option is required please set the main files of vue`);
-    return;
   }
   if (!options.alias) {
     warn(
@@ -155,7 +154,7 @@ function generateRouteString(filesAst, pre) {
       } else {
         this.routeString += `
         {
-          component: () => import('${this.alias ? item.alias : item.dir}'),
+          component: () => import('${item.alias}'),
           name:'${replaceDynamic(item.parentName.join('-'))}',
           `;
         if (pre && nestCollections[pre.parentName.join('-')] !== undefined) {

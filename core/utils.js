@@ -14,10 +14,7 @@ exports.replaceAlias = (str, dir) => {
 
 exports.replaceVue = str => str.replace(/\.vue/g, '');
 
-exports.camelize = str =>
-  str.replace(/[-_](\w)/g, (_, c) => (c ? c.toUpperCase() : ''));
-
-exports.hyphenate = str => str.replace(/\B([A-Z])/g, '-$1').toLowerCase();
+exports.camelize = str => str.replace(/[-_](\w)/g, (_, c) => c.toUpperCase());
 
 exports.makeMap = str => {
   const map = Object.create(null);

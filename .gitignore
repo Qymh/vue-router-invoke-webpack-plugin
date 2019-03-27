@@ -3,5 +3,7 @@ npm-debug.log
 
 demos/dist
 .DS_Store
-.invoke
 coverage
+
+.invoke
+.vscode

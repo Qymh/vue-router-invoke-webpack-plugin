@@ -26,15 +26,14 @@ const base = {
   resolve: {
     extensions: ['.js', '.vue'],
     alias: {
-      '@src': path.resolve(__dirname, './src')
+      '@': path.resolve(__dirname, '../')
     }
   },
   plugins: [
     new VueRouterInvokePlugin({
       dir: 'demos/src',
-      alias: '@src',
-      ignore: ['images', 'template.vue'],
-      language: 'javascript'
+      alias: '@/src',
+      ignore: ['images', 'template.vue']
     }),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({

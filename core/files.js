@@ -3,6 +3,7 @@
 const fs = require('fs');
 const { replaceVue } = require('./utils');
 const isFile = dir => fs.statSync(dir).isFile();
+
 exports.isFile = isFile;
 
 const root = process.cwd();
@@ -11,7 +12,9 @@ exports.root = root;
 function writeFile(options) {
   if (!fs.existsSync(this.routerDir)) {
     if (options.routerDir) {
-      fs.mkdirSync(`${root}/${options.routerDir}/.invoke`, { recursive: true });
+      fs.mkdirSync(`${root}/${options.routerDir}/.invoke`, {
+        recursive: true
+      });
     } else {
       fs.mkdirSync(`${root}/.invoke`, { recursive: true });
     }
@@ -22,13 +25,13 @@ function writeFile(options) {
 }
 
 function watchFile(options, start) {
-  writeFile(options);
+  writeFile.call(this, options);
   fs.watch(this.watchDir, { recursive: true }, type => {
     if (type === 'change') {
       return;
     }
-    start(options);
-    writeFile(options);
+    start.call(this, options);
+    writeFile.call(this, options);
   });
 }
 
