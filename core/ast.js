@@ -67,6 +67,7 @@ function init(options) {
   this.watchDir = '';
   this.routeString = '';
   this.ignoreRegExp = '';
+  this.nestArr = [];
   this.routeStringPre =
     language === 'javascript' ? routeStringPreJs : routeStringPreTs;
   this.routeStringPost = routeStringPostFn(mode, behavior);
@@ -137,18 +138,16 @@ function sortFilesAst(filesAst) {
  */
 function generateRouteString(filesAst, pre) {
   if (!pre) {
-    nestCollections = [];
+    nestCollections = {};
   }
   for (const item of filesAst) {
     if (
-      this.ignoreRegExp.test(item.file) ||
-      (item.parentName && this.ignoreRegExp.test(item.parentName.join('')))
+      this.ignoreRegExp &&
+      (this.ignoreRegExp.test(item.file) ||
+        (item.parentName && this.ignoreRegExp.test(item.parentName.join(''))))
     ) {
     } else {
       if (!item.isFile) {
-        if (nestCollections[item.parentName.join('-')]) {
-          nestCollections[item.parentName.join('-')]--;
-        }
         generateRouteString.call(this, item.children, item);
       } else {
         this.routeString += `
@@ -162,6 +161,7 @@ function generateRouteString(filesAst, pre) {
           this.routeString += `path:'/${item.parentName.join('/')}',`;
         }
         if (item.isNest) {
+          this.nestArr.push(item.parentName.join('-'));
           nestCollections[item.parentName.join('-')] = pre.children.length - 1;
           this.routeString += `children:[`;
           if (pre.children.length - 1 === 0) {
@@ -170,8 +170,29 @@ function generateRouteString(filesAst, pre) {
         } else {
           this.routeString += '},';
         }
-        if (pre && nestCollections[pre.parentName.join('-')] === 0) {
-          this.routeString += '],},';
+        const bool = this.nestArr.some(v =>
+          pre.parentName.join('-').includes(v)
+        );
+        if (bool) {
+          this.nestArr.forEach(v => {
+            if (pre.parentName.join('-').includes(v)) {
+              nestCollections[v]--;
+            }
+          });
+          if (item.isNest) {
+            nestCollections[pre.parentName.join('-')]++;
+          }
+          let count = 0;
+          for (const key in nestCollections) {
+            const val = nestCollections[key];
+            if (val === 0) {
+              count++;
+              this.routeString += '],},';
+            }
+          }
+          if (count === Object.keys(nestCollections).length) {
+            nestCollections = {};
+          }
         }
       }
     }

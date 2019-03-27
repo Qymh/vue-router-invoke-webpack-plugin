@@ -17,7 +17,6 @@ function start(options) {
   generateFilesAst.call(this, options.dir, this.filesAst, '');
   sortFilesAst.call(this, this.filesAst);
   generateRouteString.call(this, this.filesAst);
-  // console.dir(this.filesAst, { depth: null });
   generateRedirectRoute.call(this, options);
   this.routeString += this.routeStringPost;
   generateGuards.call(this, options);

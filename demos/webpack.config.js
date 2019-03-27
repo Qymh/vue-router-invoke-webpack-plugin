@@ -18,8 +18,9 @@ const base = {
   module: {
     rules: [
       {
-        test: /\.ts$/,
-        loader: 'babel-loader'
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
       },
       {
         test: /\.vue$/,
