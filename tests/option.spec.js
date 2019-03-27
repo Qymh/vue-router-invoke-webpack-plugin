@@ -206,10 +206,7 @@ describe('option', () => {
     process.env.NODE_ENV = 'test';
     removeFile('single/watch');
     makeFile('single/watch/Index.vue');
-    fs.writeFileSync(
-      path.resolve(process.cwd(), 'tests/single/Login/Index.vue'),
-      456
-    );
+    fs.writeFileSync(path.resolve(process.cwd(), 'tests/single/Login/Index.vue'), 456);
     await new Promise(resolve => {
       setTimeout(() => {
         let file = fs.readFileSync('tests/.invoke/router.js', 'utf-8');
