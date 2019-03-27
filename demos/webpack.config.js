@@ -18,6 +18,10 @@ const base = {
   module: {
     rules: [
       {
+        test: /\.ts$/,
+        loader: 'babel-loader'
+      },
+      {
         test: /\.vue$/,
         loader: 'vue-loader'
       }
@@ -26,14 +30,36 @@ const base = {
   resolve: {
     extensions: ['.js', '.vue'],
     alias: {
-      '@': path.resolve(__dirname, '../')
+      '@': path.resolve(process.cwd(), 'demos')
     }
   },
   plugins: [
     new VueRouterInvokePlugin({
       dir: 'demos/src',
       alias: '@/src',
-      ignore: ['images', 'template.vue']
+      language: 'javascript',
+      routerDir: 'demos',
+      ignore: ['images', 'template.vue', 'components'],
+      redirect: [
+        {
+          path: '/',
+          redirect: '/redirect'
+        }
+      ],
+      scrollBehavior: (to, from, savedPosition) => {
+        if (savedPosition) {
+          return savedPosition;
+        } else {
+          return { x: 0, y: 0 };
+        }
+      },
+      beforeEach: (to, from, next) => {
+        next();
+      },
+      beforeResolve: (to, from, next) => {
+        next();
+      },
+      afterEach: (to, from) => {}
     }),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
@@ -57,7 +83,7 @@ if (isDev) {
     publicPath: '/',
     inline: true,
     quiet: true,
-    open: true,
+    open: false,
     clientLogLevel: 'warning',
     historyApiFallback: true
   };

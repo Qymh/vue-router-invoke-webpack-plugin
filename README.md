@@ -6,7 +6,7 @@ This is a webpack plugin which can automatic generate your `vue-router` path and
 
 - [x] eslint & commit check
 - [x] publish shell
-- [] tests
+- [x] tests
 - [] circleci
 - [] resolve meta succedaneum
 - [] 中文文档
@@ -96,44 +96,45 @@ module.exports = {
 
 ## Options
 
-| Prop           |   Type   | Required |        Default         |                              Description |
-| -------------- | :------: | :------: | :--------------------: | ---------------------------------------: |
-| dir            |  String  |   true   |           ''           |                       vue file directory |
-| alias          |  String  |   true   |           ''           |                 the option `dir`'s alias |
-| mode           |  String  |  false   |        history         |                          hash or history |
-| routerdir      |  String  |  false   | ROOT/.invoke/router.js |                 generated router.js file |
-| language       |  String  |  false   |       javascript       |                 javascript or typescript |
-| ignore         |  Array   |  false   |           []           | files or directions will not be resolved |
-| redirect       |  Array   |  false   |           []           |                           redirect route |
-| scrollBehavior | Function |  false   |           ''           |                   same as scrollBehavior |
-| beforeEach     | Function |  false   |           ''           |                        router.beforeEach |
-| beforeResolve  | Function |  false   |           ''           |                     router.beforeResolve |
-| afterEach      | Function |  false   |           ''           |                         router.afterEach |
+| Prop           |   Type   | Required |  Default   |                              Description |
+| -------------- | :------: | :------: | :--------: | ---------------------------------------: |
+| dir            |  String  |   true   |     ''     |                       vue file directory |
+| alias          |  String  |   true   |     ''     |                 the option `dir`'s alias |
+| mode           |  String  |  false   |  history   |                          hash or history |
+| routerDir      |  String  |  false   |    ROOT    |                 generated router.js file |
+| language       |  String  |  false   | javascript |                 javascript or typescript |
+| ignore         |  Array   |  false   |     []     | files or directions will not be resolved |
+| redirect       |  Array   |  false   |     []     |                           redirect route |
+| scrollBehavior | Function |  false   |     ''     |                   same as scrollBehavior |
+| beforeEach     | Function |  false   |     ''     |                        router.beforeEach |
+| beforeResolve  | Function |  false   |     ''     |                     router.beforeResolve |
+| afterEach      | Function |  false   |     ''     |                         router.afterEach |
 
 ## How To Automatical Invoke
 
-The following example depends on the same options
+The following example depends on VueCli3. I believe that if you know how to use in VueCli3,the using of webpack is easy for you.
+
+`vue.config.js`
 
 ```javascript
+const VueRouterInvokeWebpackPlugin = require('vue-router-invoke-webpack-plugin');
 
-resolve: {
-  alias: {
-    '@src': path.resolve(process.cwd(), 'demos/src')
+module.exports = {
+  // omit other options...
+  configureWebpack(config) {
+    config.plugins.push(
+      new VueRouterInvokeWebpackPlugin({
+        dir: 'src/views',
+        alias: '@/views'
+      })
+    );
   }
-}
-
-plugins: [
-  new VueRouterInvokePlugin({
-    dir: 'demos/src',
-    alias: '@src',
-    language: 'javascript'
-  })
-];
+};
 ```
 
-And import `router.js` in your entry file like `app.js` or `main.js`
+And import `router.js` in your entry file `src/main.js`
 
-The default location of `router.js` is under the invoke folder in the root directory,You can change the location anywhere by setting the `routerdir` option
+The default location of `router.js` is under the invoke folder in the root directory,You can change the location anywhere by setting the `routerDir` option
 
 ```javascript
 import Vue from 'vue';
@@ -152,8 +153,8 @@ export default new Vue({
 If your directory just like this
 
 ```
-demos
-├── src
+src
+├── views
 │   ├── Login
 │   │   └── Index.vue
 │   └── User
@@ -169,25 +170,25 @@ automatical generated route will be this
 ```javascript
 {
   component: () =>
-    import('@src/Login/Index.vue'),
+    import('@/views/Login/Index.vue'),
   name: 'login',
   path: '/login'
 },
 {
   component: () =>
-    import('@src/User/Index.vue'),
+    import('@/views/User/Index.vue'),
   name: 'user',
   path: '/user'
 },
 {
   component: () =>
-    import('@src/User/Account/Index.vue'),
+    import('@/views/User/Account/Index.vue'),
   name: 'user-account',
   path: '/user/account'
 },
 {
   component: () =>
-    import('@src/User/Home/Index.vue'),
+    import('@/views/User/Home/Index.vue'),
   name: 'user-home',
   path: '/user/home'
 }
@@ -198,8 +199,8 @@ automatical generated route will be this
 If your directory just like this
 
 ```
-demos
-├── src
+src
+├── views
 │   ├── Login
 │   │   └── Index.vue
 │   └── User
@@ -213,19 +214,19 @@ automatical generated route will be this
 ```javascript
 {
   component: () =>
-    import('@src/Login/Index.vue'),
+    import('@/views/Login/Index.vue'),
   name: 'login',
   path: '/login'
 },
 {
   component: () =>
-    import('@src/User/Index.vue'),
+    import('@/views/User/Index.vue'),
   name: 'user',
   path: '/user'
 },
 {
   component: () =>
-    import('@src/User/:Home/Index.vue'),
+    import('@/views/User/:Home/Index.vue'),
   name: 'user-home',
   path: '/user/:home'
 }
@@ -236,8 +237,8 @@ automatical generated route will be this
 If your directory just like this
 
 ```
-demos
-├── src
+src
+├── views
 │   ├── Login
 │   │   └── Index.vue
 │   └── User
@@ -253,25 +254,25 @@ automatical generated route will be this
 ```javascript
 {
   component: () =>
-    import('@src/Login/Index.vue'),
+    import('@/views/Login/Index.vue'),
   name: 'login',
   path: '/login'
 },
 {
   component: () =>
-    import('@src/User/User.vue'),
+    import('@/views/User/User.vue'),
   name: 'user',
   path: '/user',
   children: [
     {
       component: () =>
-        import('@src/User/Chart/Index.vue'),
+        import('@/views/User/Chart/Index.vue'),
       name: 'user-chart',
       path: 'chart'
     },
     {
       component: () =>
-        import('@src/User/Home/Index.vue'),
+        import('@/views/User/Home/Index.vue'),
       name: 'user-home',
       path: 'home'
     }
@@ -284,8 +285,8 @@ automatical generated route will be this
 If your directory just like this
 
 ```
-demos
-├── src
+src
+├── views
 │   ├── Login
 │   │   └── Index.vue
 │   └── User
@@ -301,31 +302,35 @@ automatical generated route will be this
 ```javascript
 {
     component: () =>
-      import('@src/Login/Index.vue'),
+      import('@/views/Login/Index.vue'),
     name: 'login',
     path: '/login'
   },
   {
     component: () =>
-      import('@src/User/Index.vue'),
+      import('@/views/User/Index.vue'),
     name: 'user',
     path: '/user'
   },
   {
     component: () =>
-      import('@src/User/:Category/:Category.vue'),
+      import('@/views/User/:Category/:Category.vue'),
     name: 'user-category',
     path: '/user/:category',
     children: [
       {
         component: () =>
-          import('@src/User/:Category/Infor/Index.vue'),
+          import('@/views/User/:Category/Infor/Index.vue'),
         name: 'user-category-infor',
         path: 'infor'
       }
     ]
   }
 ```
+
+## Meta Succedaneum
+
+ToDo
 
 ## Special Options
 
@@ -340,7 +345,8 @@ And the value ignore case
 ```javascript
 plugins: [
   new VueRouterInvokePlugin({
-    dir: 'demos/src',
+    dir: 'src/views',
+    alias: '@/views',
     language: 'javascript',
     ignore: ['images', 'components', 'template.vue']
   })
@@ -350,8 +356,8 @@ plugins: [
 the directory
 
 ```
-demos
-├── src
+src
+├── views
 │   ├── Login
 │   │   └── Index.vue
 │   ├── Template.vue
@@ -366,13 +372,13 @@ the automatical route
 ```javascript
 {
   component: () =>
-    import('@src/Login/Index.vue'),
+    import('@/views/Login/Index.vue'),
   name: 'login',
   path: '/login'
 },
 {
   component: () =>
-    import('@src/User/Index.vue'),
+    import('@/views/User/Index.vue'),
   name: 'user',
   path: '/user'
 }
@@ -387,7 +393,8 @@ If your set options like this
 ```javascript
 plugins: [
   new VueRouterInvokePlugin({
-    dir: 'demos/src',
+    dir: 'src/views',
+    alias: '@/src',
     language: 'javascript',
     redirect: [
       {
@@ -424,7 +431,8 @@ If your set options like this
 
 ```javascript
 new VueRouterInvokePlugin({
-  dir: 'demos/src',
+  dir: 'src/views',
+  alias: '@/views',
   language: 'javascript',
   beforeEach: (to, from, next) => {
     next();
@@ -459,7 +467,8 @@ If your set options like this
 
 ```javascript
 new VueRouterInvokePlugin({
-  dir: 'demos/src',
+  dir: 'src/views',
+  alias: '@/src',
   language: 'javascript',
   scrollBehavior: (to, from, savedPosition) => {
     if (savedPosition) {

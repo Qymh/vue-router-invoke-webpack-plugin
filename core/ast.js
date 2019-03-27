@@ -141,9 +141,8 @@ function generateRouteString(filesAst, pre) {
   }
   for (const item of filesAst) {
     if (
-      this.ignoreRegExp &&
-      (this.ignoreRegExp.test(item.file) ||
-        (item.parentName && this.ignoreRegExp.test(item.parentName.join(''))))
+      this.ignoreRegExp.test(item.file) ||
+      (item.parentName && this.ignoreRegExp.test(item.parentName.join('')))
     ) {
     } else {
       if (!item.isFile) {
