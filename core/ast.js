@@ -5,7 +5,7 @@ const {
   warn,
   camelize,
   replaceVue,
-  lowerCase,
+  firstLowerCase,
   replaceDynamic,
   replaceAlias,
   makeMap,
@@ -99,7 +99,7 @@ function generateFilesAst(dir, filesAst, parent) {
   }
   for (const file of files) {
     const curAst = {};
-    const fileLowerCase = lowerCase(file);
+    const fileLowerCase = firstLowerCase(file);
     const curDir = `${root}/${dir}/${file}`;
     curAst.dir = curDir;
     curAst.alias = `${this.alias}${replaceAlias(dir, this.dir)}/${file}`;

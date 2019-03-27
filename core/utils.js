@@ -6,7 +6,13 @@ exports.warn = msg => {
   assert.fail(`\n\n\x1B[31mvue-router-invoke-webpack-plugin:${msg} \x1b[39m\n`);
 };
 
-exports.lowerCase = str => str.toLowerCase();
+exports.firstLowerCase = ([first, second, ...rest]) => {
+  if (first === ':') {
+    return first + second.toLowerCase() + rest.join('');
+  } else {
+    return first.toLowerCase() + second + rest.join('');
+  }
+};
 
 exports.replaceAlias = (str, dir) => {
   return str.replace(new RegExp(dir, 'gi'), '');
