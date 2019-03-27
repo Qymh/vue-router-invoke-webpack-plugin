@@ -219,6 +219,7 @@ describe('option', () => {
         fs.writeFileSync(
           path.resolve(process.cwd(), 'tests/single/Login/Index.vue')
         );
+        removeFile('single/watch');
         resolve();
       }, 1000);
     });
