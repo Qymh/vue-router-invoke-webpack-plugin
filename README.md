@@ -364,7 +364,7 @@ src
 
 automatical generated route will be this
 
-````javascript
+```javascript
 {
   component: () => import('@/src/LoginPage/index.vue'),
   name: 'loginPage',
@@ -385,6 +385,7 @@ automatical generated route will be this
   name: 'userHome-account',
   path: '/userHome/account'
 },
+```
 
 ## Demos
 
@@ -413,7 +414,7 @@ plugins: [
     ignore: ['images', 'components', 'template.vue']
   })
 ];
-````
+```
 
 the directory
 
