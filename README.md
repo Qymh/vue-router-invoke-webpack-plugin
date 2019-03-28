@@ -7,7 +7,7 @@ This is a webpack plugin which can automatic generate your `vue-router` path and
 - [x] eslint & commit check
 - [x] publish shell
 - [x] tests
-- [] circleci
+- [x] circleci
 - [] resolve meta succedaneum
 - [] 中文文档
 
