@@ -3,17 +3,19 @@ jobs:
   build:
     docker:
       - image: circleci/node:7.10
+
     working_directory: ~/app
-  steps:
-    - checkout
 
-    - run: yarn
+    steps:
+      - checkout
 
-    - save_cache:
-      key: vue-router-invoke-webpack-plugin-{{ .Branch }}-{{ checksum "yarn.lock" }}
-      paths:
-        - node_modules
+      - run: yarn
 
-    - run: npm run lint
+      - save_cache:
+        key: vue-router-invoke-webpack-plugin-{{ .Branch }}-{{ checksum "yarn.lock" }}
+        paths:
+          - node_modules
 
-    - run: npm run test:single
+      - run: npm run lint
+
+      - run: npm run test:single
