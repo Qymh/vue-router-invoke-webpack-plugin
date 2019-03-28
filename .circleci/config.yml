@@ -6,10 +6,12 @@ jobs:
     working_directory: ~/app
     steps:
       - checkout
-      # - run: yarn
-      # - save_cache:
-      #   key: vue-router-invoke-webpack-plugin-{{ .Branch }}-{{ checksum "yarn.lock" }}
-      #   paths:
-      #     - node_modules
-      # - run: npm run lint
-      # - run: npm run test:single
+      - restore_cache:
+          key: vue-router-invoke-webpack-plugin-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run: yarn
+      - save_cache:
+          paths:
+            - node_modules
+          key: vue-router-invoke-webpack-plugin-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run: npm run lint
+      - run: npm run test:single
