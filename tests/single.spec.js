@@ -42,6 +42,16 @@ describe('singleRoute', () => {
     removeFile('singleT');
   });
 
+  it('homepage', () => {
+    makeFile('singleT/Login/Index.vue');
+    makeFile('singleT/Index.vue');
+    testPlugin(
+      { dir: 'tests/singleT', alias: '@/singleT' },
+      `name\\:\\'index\\',path\\:\\'\\/\\'`
+    );
+    removeFile('singleT');
+  });
+
   it('yakitori name', () => {
     makeFile('singleT/Login-Name/Index.vue');
     testPlugin(
