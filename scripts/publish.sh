@@ -20,9 +20,9 @@ fi
 log "code review"
 npm run lint
 
+npm config set registry http://registry.npmjs.org 
 log "publish ${VERSION}"
 
-npm config set registry http://registry.npmjs.org 
 npm version $VERSION --message "feature => release $VERSION"
 npm publish
 
