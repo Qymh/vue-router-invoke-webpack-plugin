@@ -1,11 +1,21 @@
 {
   "name": "vue-router-invoke-webpack-plugin",
   "version": "0.1.14",
+  "description": "automatic generate your vue-router path and stronger normalize your file directory",
+  "main": "core/index.js",
   "author": {
     "name": "Qymh",
     "email": "bowei.zhang@ankerbox.com"
   },
-  "main": "core/index.js",
+  "keywords": [
+    "vue",
+    "vue-router",
+    "webpack"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Qymh/vue-router-invoke-webpack-plugin.git"
+  },
   "license": "MIT",
   "scripts": {
     "check": "yarn upgrade-interactive --latest",
