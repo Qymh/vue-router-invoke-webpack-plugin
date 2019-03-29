@@ -17,10 +17,13 @@ const {
   root,
   getRouterDir,
   getWatchDir,
-  generateIgnoreFiles
+  generateIgnoreFiles,
+  generateModules
 } = require('./files');
-let routeStringPreJs = `import Vue from 'vue';import Router from 'vue-router';Vue.use(Router);const routes = [`;
-let routeStringPreTs = `import Vue from 'vue';import Router, { RouteConfig } from 'vue-router';Vue.use(Router);const routes: RouteConfig[] = [`;
+let routeStringPreJs = modules =>
+  `import Vue from 'vue';import Router from 'vue-router';${modules};Vue.use(Router);const routes = [`;
+let routeStringPreTs = modules =>
+  `import Vue from 'vue';import Router, { RouteConfig } from 'vue-router';${modules};Vue.use(Router);const routes: RouteConfig[] = [`;
 let routeStringPostFn = (mode, behavior) =>
   `];const router = new Router({mode: '${mode}',routes,${behavior &&
     'scrollBehavior:' + behavior}});`;
@@ -70,6 +73,7 @@ function init(options) {
   if (options.scrollBehavior) {
     behavior = options.scrollBehavior.toString();
   }
+  let modules = generateModules(options);
   this.metaYmlReg = '';
   this.routerDir = '';
   this.watchDir = '';
@@ -77,7 +81,9 @@ function init(options) {
   this.ignoreRegExp = '';
   this.nestArr = [];
   this.routeStringPre =
-    language === 'javascript' ? routeStringPreJs : routeStringPreTs;
+    language === 'javascript'
+      ? routeStringPreJs(modules)
+      : routeStringPreTs(modules);
   this.routeStringPost = routeStringPostFn(mode, behavior);
   this.routeStringExport = routeStringExport;
   this.alias = options.alias;

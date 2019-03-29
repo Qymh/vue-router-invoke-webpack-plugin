@@ -102,3 +102,25 @@ exports.generateGuards = function(options) {
     `;
   }
 };
+
+exports.generateModules = function(options) {
+  let str = '';
+  if (options.modules) {
+    for (const module of options.modules) {
+      str += `import ${module.name} from ${module.package};`;
+    }
+  }
+  return str;
+};
+
+exports.generateNotFound = function(options) {
+  if (options.notFound) {
+    this.routeString += `
+      {
+        name:'notFound',
+        path:'*',
+        component: () => import('${options.notFound}')
+      },
+    `;
+  }
+};

@@ -159,6 +159,40 @@ describe('option', () => {
     );
   });
 
+  it('notFound', () => {
+    testPlugin(
+      {
+        dir: 'tests/single',
+        alias: '@/single',
+        redirect: [
+          {
+            path: '/',
+            redirect: '/home'
+          }
+        ],
+        ignore: ['NotFound.vue'],
+        notFound: '@/single/NotFound.vue'
+      },
+      `name\\:\\'notFound\\',path\\:\\'\\*\\'`
+    );
+  });
+
+  it('modules', () => {
+    testPlugin(
+      {
+        dir: 'tests/single',
+        alias: '@/single',
+        modules: [
+          {
+            name: 'some',
+            package: 'Some'
+          }
+        ]
+      },
+      `importsomefromSome`
+    );
+  });
+
   it('scrollBehavior', () => {
     testPlugin(
       {

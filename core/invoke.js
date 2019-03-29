@@ -9,7 +9,8 @@ const {
 const {
   generateRedirectRoute,
   generateGuards,
-  writeOrWatchFile
+  writeOrWatchFile,
+  generateNotFound
 } = require('./files');
 
 function start(options) {
@@ -18,6 +19,7 @@ function start(options) {
   sortFilesAst.call(this, this.filesAst);
   generateRouteString.call(this, this.filesAst);
   generateRedirectRoute.call(this, options);
+  generateNotFound.call(this, options);
   this.routeString += this.routeStringPost;
   generateGuards.call(this, options);
   this.routeString += this.routeStringExport;
