@@ -160,69 +160,79 @@ function generateRouteString(filesAst, pre) {
   }
   for (const item of filesAst) {
     if (
-      (this.ignoreRegExp &&
-        (this.ignoreRegExp.test(item.file) ||
-          (item.parentName &&
-            this.ignoreRegExp.test(item.parentName.join(''))))) ||
-      this.metaYmlReg.test(item.file)
+      this.ignoreRegExp &&
+      (this.ignoreRegExp.test(item.file) ||
+        (item.parentName && this.ignoreRegExp.test(item.parentName.join(''))))
     ) {
     } else {
       if (!item.isFile) {
         generateRouteString.call(this, item.children, item);
       } else {
-        this.routeString += `
-        {
-          component: () => import('${item.alias}'),
-          name:'${replaceDynamic(item.parentName.join('-'))}',
-          `;
-        if (item.meta) {
-          this.routeString += `meta:{`;
-          for (const meta of item.meta) {
-            for (const key in meta) {
-              this.routeString += `${key}:${meta[key]},`;
-            }
-          }
-          this.routeString += `},`;
-        }
-        if (Object.keys(nestCollections).length) {
-          const curNest = this.nestArr[this.nestArr.length - 1].split('-');
-          const res = diff(curNest, item.parentName);
-          this.routeString += `path:'${res.join('/')}',`;
-        } else {
-          this.routeString += `path:'/${item.parentName.join('/')}',`;
-        }
-        if (item.isNest) {
-          this.nestArr.push(item.parentName.join('-'));
-          nestCollections[item.parentName.join('-')] = pre.children.length - 1;
-          this.routeString += `children:[`;
-          if (pre.children.length - 1 === 0) {
-            this.routeString += '],},';
+        if (this.metaYmlReg.test(item.file)) {
+          if (nestCollections[item.parentName.join('-')]) {
+            nestCollections[item.parentName.join('-')]--;
           }
         } else {
-          this.routeString += '},';
-        }
-        const isNestChild = this.nestArr.some(v =>
-          pre.parentName.join('-').includes(v)
-        );
-        if (isNestChild) {
-          this.nestArr.forEach(v => {
-            if (pre.parentName.join('-').includes(v)) {
-              nestCollections[v]--;
+          this.routeString += `
+          {
+            component: () => import('${item.alias}'),
+            name:'${
+              item.parentName.length
+                ? replaceDynamic(item.parentName.join('-'))
+                : 'Index'
+            }',
+            `;
+          if (item.meta) {
+            this.routeString += `meta:{`;
+            for (const meta of item.meta) {
+              for (const key in meta) {
+                this.routeString += `${key}:${meta[key]},`;
+              }
             }
-          });
-          if (pre.children.length >= 2) {
-            nestCollections[pre.parentName.join('-')]++;
+            this.routeString += `},`;
           }
-          let count = 0;
-          for (const key in nestCollections) {
-            const val = nestCollections[key];
-            if (val === 0) {
-              count++;
+
+          if (Object.keys(nestCollections).length) {
+            const curNest = this.nestArr[this.nestArr.length - 1].split('-');
+            const res = diff(curNest, item.parentName);
+            this.routeString += `path:'${res.join('/')}',`;
+          } else {
+            this.routeString += `path:'/${item.parentName.join('/')}',`;
+          }
+          if (item.isNest) {
+            this.nestArr.push(item.parentName.join('-'));
+            nestCollections[item.parentName.join('-')] =
+              pre.children.length - 1;
+            this.routeString += `children:[`;
+            if (pre.children.length - 1 === 0) {
               this.routeString += '],},';
             }
+          } else {
+            this.routeString += '},';
           }
-          if (count === Object.keys(nestCollections).length) {
-            nestCollections = {};
+          const isNestChild = this.nestArr.some(v =>
+            pre.parentName.join('-').includes(v)
+          );
+          if (isNestChild) {
+            this.nestArr.forEach(v => {
+              if (pre.parentName.join('-').includes(v)) {
+                nestCollections[v]--;
+              }
+            });
+            if (pre.children.length >= 2) {
+              nestCollections[pre.parentName.join('-')]++;
+            }
+            let count = 0;
+            for (const key in nestCollections) {
+              const val = nestCollections[key];
+              if (val === 0) {
+                count++;
+                this.routeString += '],},';
+              }
+            }
+            if (count === Object.keys(nestCollections).length) {
+              nestCollections = {};
+            }
           }
         }
       }
