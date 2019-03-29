@@ -36,7 +36,7 @@ yarn add vue-router-invoke-webpack-plugin -D
 
 ### Webpack
 
-- make sure you have set process.env.NODE_ENV in development environment is equal to `development` and in production environment is equal to `production`.You can do that by using (cross-env)[https://github.com/kentcdodds/cross-env] or some other plugin.
+- make sure you have set process.env.NODE_ENV in development environment is equal to `development` and in production environment is equal to `production`.You can do that by using [cross-env](https://github.com/kentcdodds/cross-env) or some other plugin.
 - make sure you have set the alias for `dir` option.
 - the generated route will be lazyload. So make sure you have add [@babel/plugin-syntax-dynamic-import](https://babeljs.io/docs/en/next/babel-plugin-syntax-dynamic-import.html)
 
