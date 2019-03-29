@@ -20,7 +20,6 @@ fi
 log "code review"
 npm run lint
 
-nrm use npm
 log "publish ${VERSION}"
 
 npm version $VERSION --message "feature => release $VERSION"
