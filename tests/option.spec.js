@@ -126,7 +126,7 @@ describe('option', () => {
     );
     testPlugin(
       { dir: 'tests/metaTest', alias: '@/metaTest' },
-      `meta\\:\\{name\\:metaTest`
+      `meta\\:\\{name\\:\\'metaTest\\'`
     );
     removeFile('metaTest');
   });
