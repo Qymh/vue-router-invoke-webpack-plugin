@@ -100,12 +100,14 @@ module.exports = {
 | -------------- | :------: | :------: | :--------: | ---------------------------------------: |
 | dir            |  String  |   true   |     ''     |                       vue file directory |
 | alias          |  String  |   true   |     ''     |                 the option `dir`'s alias |
+| notFound       |  String  |  false   |     ''     |      the alias address of notFound chunk |
 | mode           |  String  |  false   |  history   |                          hash or history |
 | meta           |  String  |  false   |    meta    |                      the yml file's name |
 | routerDir      |  String  |  false   |    ROOT    |                 generated router.js file |
 | language       |  String  |  false   | javascript |                 javascript or typescript |
 | ignore         |  Array   |  false   |     []     | files or directions will not be resolved |
 | redirect       |  Array   |  false   |     []     |                           redirect route |
+| modules        |  Array   |  false   |     []     |                       the import modules |
 | scrollBehavior | Function |  false   |     ''     |                   same as scrollBehavior |
 | beforeEach     | Function |  false   |     ''     |                        router.beforeEach |
 | beforeResolve  | Function |  false   |     ''     |                     router.beforeResolve |
@@ -215,8 +217,8 @@ src
 {
   component: () =>
     import('@/views/Index.vue'),
-  name:'index',
-  path:'/'
+  name: 'index',
+  path: '/'
 },
 {
   component: () =>
@@ -465,6 +467,56 @@ automatical generated route will be this
 
 ## Special Options
 
+### notFound
+
+If your set options like this
+
+```javascript
+plugins: [
+  new VueRouterInvokePlugin({
+    dir: 'src/views',
+    alias: '@/views',
+    ignore: ['NotFound.vue'],
+    notFound: '@/views/NotFound.vue'
+  })
+];
+```
+
+the directory
+
+```
+src
+├── views
+│   ├── Login
+│   │   └── Index.vue
+│   └── Index.vue
+│   └── NotFound.vue
+
+```
+
+the automatical route
+
+```javascript
+{
+  component: () =>
+    import('@/views/Index.vue'),
+  name: 'index',
+  path: '/'
+},
+{
+  component: () =>
+    import('@/views/NotFound.vue'),
+  name: 'notFound',
+  path: '*'
+},
+{
+  component: () =>
+    import('@/views/Login/Index.vue'),
+  name: 'login',
+  path: '/login'
+}
+```
+
 ### Ignore
 
 If your set options like this
@@ -553,6 +605,10 @@ the automatical route
   redirect: '/test'
 }
 ```
+
+### Modules
+
+ToDo
 
 ### VueRouter Guards
 
