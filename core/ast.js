@@ -179,7 +179,7 @@ function generateRouteString(filesAst, pre) {
             name:'${
               item.parentName.length
                 ? replaceDynamic(item.parentName.join('-'))
-                : 'Index'
+                : 'index'
             }',
             `;
           if (item.meta) {
