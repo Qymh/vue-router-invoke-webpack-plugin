@@ -101,6 +101,7 @@ module.exports = {
 | dir            |  String  |   true   |     ''     |                       vue file directory |
 | alias          |  String  |   true   |     ''     |                 the option `dir`'s alias |
 | mode           |  String  |  false   |  history   |                          hash or history |
+| meta           |  String  |  false   |    meta    |                      the yml file's name |
 | routerDir      |  String  |  false   |    ROOT    |                 generated router.js file |
 | language       |  String  |  false   | javascript |                 javascript or typescript |
 | ignore         |  Array   |  false   |     []     | files or directions will not be resolved |
@@ -397,7 +398,7 @@ But if you really need define the plain `meta` option of `vue-router` .You shoul
 
 For example
 
-``` javascript
+```javascript
 demos/src
 ├── Single
 │   ├── Index.vue
@@ -428,7 +429,6 @@ automatical generated route will be this
   path: 'single/user'
 }
 ```
-
 
 ## Special Options
 
