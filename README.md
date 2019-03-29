@@ -195,6 +195,37 @@ automatical generated route will be this
 }
 ```
 
+### HomePage
+
+We make a special treatment for HomePage which route is `/`
+
+HomePage we named `Index.vue` and is a unique route
+
+If your directory just like this
+
+```
+src
+├── views
+│   ├── Login
+│   │   └── Index.vue
+│   └── Index.vue
+```
+
+```javascript
+{
+  component: () =>
+    import('@/views/Index.vue'),
+  name:'index',
+  path:'/'
+},
+{
+  component: () =>
+    import('@/views/Login/Index.vue'),
+  name: 'login',
+  path: '/login'
+}
+```
+
 ### Dynamic Route
 
 If your directory just like this
@@ -232,6 +263,8 @@ automatical generated route will be this
   path: '/user/:home'
 }
 ```
+
+automatical generated route will be this
 
 ### Nest Route
 
@@ -367,22 +400,22 @@ automatical generated route will be this
 
 ```javascript
 {
-  component: () => import('@/src/LoginPage/index.vue'),
+  component: () => import('@/views/LoginPage/index.vue'),
   name: 'loginPage',
   path: '/loginPage'
 },
 {
-  component: () => import('@/src/User-home/Index.vue'),
+  component: () => import('@/views/User-home/Index.vue'),
   name: 'userHome',
   path: '/userHome'
 },
 {
-  component: () => import('@/src/User-home/Home-details/Index.vue'),
+  component: () => import('@/views/User-home/Home-details/Index.vue'),
   name: 'userHome-homeDetails',
   path: '/userHome/homeDetails'
 },
 {
-  component: () => import('@/src/User-home/account/Index.vue'),
+  component: () => import('@/views/User-home/account/Index.vue'),
   name: 'userHome-account',
   path: '/userHome/account'
 },
@@ -399,7 +432,7 @@ But if you really need define the plain `meta` option of `vue-router` .You shoul
 For example
 
 ```javascript
-demos/src
+src/views
 ├── Single
 │   ├── Index.vue
 │   └── User
@@ -418,12 +451,12 @@ automatical generated route will be this
 
 ```javascript
 {
-  component: () => import('@/src/Single/Index.vue'),
+  component: () => import('@/views/Single/Index.vue'),
   name: 'single',
   path: 'single'
 },
 {
-  component: () => import('@/src/Single/User/Index.vue'),
+  component: () => import('@/views/Single/User/Index.vue'),
   name: 'single-user',
   meta: { name: user },
   path: 'single/user'
@@ -492,7 +525,7 @@ If your set options like this
 plugins: [
   new VueRouterInvokePlugin({
     dir: 'src/views',
-    alias: '@/src',
+    alias: '@/views',
     language: 'javascript',
     redirect: [
       {
@@ -566,7 +599,7 @@ If your set options like this
 ```javascript
 new VueRouterInvokePlugin({
   dir: 'src/views',
-  alias: '@/src',
+  alias: '@/views',
   language: 'javascript',
   scrollBehavior: (to, from, savedPosition) => {
     if (savedPosition) {
