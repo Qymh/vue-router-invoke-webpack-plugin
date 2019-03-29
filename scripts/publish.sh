@@ -26,7 +26,7 @@ log "publish ${VERSION}"
 npm version $VERSION --message "feature => release $VERSION"
 npm publish
 
-npm config set registry https://registry.npm.taobao.org
-
 git push origin master
 git push origin v$VERSION
+
+npm config set registry https://registry.npm.taobao.org
