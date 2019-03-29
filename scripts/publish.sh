@@ -20,6 +20,7 @@ fi
 log "code review"
 npm run lint
 
+nrm use npm
 log "publish ${VERSION}"
 
 npm version $VERSION --message "feature => release $VERSION"
@@ -27,5 +28,4 @@ npm publish
 
 git push origin master
 git push origin v$VERSION
-
 nrm use taobao
