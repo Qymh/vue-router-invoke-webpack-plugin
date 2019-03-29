@@ -6,11 +6,11 @@ exports.warn = msg => {
   assert.fail(`\n\n\x1B[31mvue-router-invoke-webpack-plugin:${msg} \x1b[39m\n`);
 };
 
-exports.firstLowerCase = ([first, second, ...rest]) => {
+exports.firstLowerCase = ([first, ...rest]) => {
   if (first === ':') {
-    return first + second.toLowerCase() + rest.join('');
+    return first + rest.shift().toLowerCase() + rest.join('');
   } else {
-    return first.toLowerCase() + second + rest.join('');
+    return first.toLowerCase() + rest.join('');
   }
 };
 

@@ -8,7 +8,7 @@ This is a webpack plugin which can automatic generate your `vue-router` path and
 - [x] publish shell
 - [x] tests
 - [x] circleci
-- [] resolve meta succedaneum
+- [x] resolve meta succedaneum
 - [] 中文文档
 
 ## Install
@@ -393,7 +393,7 @@ The detailed usage you can `git clone` our project and run `npm run build:demos`
 
 ## Meta Succedaneum
 
-ToDo
+[vue-meta](https://github.com/nuxt/vue-meta) is a fantastic repository which can help you resolve
 
 ## Special Options
 

@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs');
+const yamljs = require('yamljs');
 const {
   warn,
   camelize,
@@ -32,6 +33,10 @@ function sortByIsFile(arr) {
   return arr.sort((a, b) => Number(b.isFile) - Number(a.isFile));
 }
 
+function generateYmlReg(meta) {
+  this.metaYmlReg = new RegExp(`^${meta}\\.yml$`, 'gi');
+}
+
 let nestCollections = {};
 
 /**
@@ -40,6 +45,7 @@ let nestCollections = {};
 function init(options) {
   let mode = options.mode || 'history';
   let language = options.language || 'javascript';
+  let meta = options.meta || 'meta';
   if (!modeMap(mode)) {
     warn(
       `the mode can only be hash or history, make sure you have set the value correctly`
@@ -64,6 +70,7 @@ function init(options) {
   if (options.scrollBehavior) {
     behavior = options.scrollBehavior.toString();
   }
+  this.metaYmlReg = '';
   this.routerDir = '';
   this.watchDir = '';
   this.routeString = '';
@@ -75,6 +82,7 @@ function init(options) {
   this.routeStringExport = routeStringExport;
   this.alias = options.alias;
   this.dir = options.dir;
+  generateYmlReg.call(this, meta);
   getRouterDir.call(this, options);
   generateIgnoreFiles.call(this, options);
   getWatchDir.call(this, options);
@@ -101,6 +109,15 @@ function generateFilesAst(dir, filesAst, parent) {
     const curAst = {};
     const fileLowerCase = firstLowerCase(file);
     const curDir = `${root}/${dir}/${file}`;
+    if (this.metaYmlReg.test(file)) {
+      const ymlStr = fs.readFileSync(curDir, 'utf8');
+      const ymlObj = yamljs.parse(ymlStr);
+      parent.children.map(v => {
+        if (!this.metaYmlReg.test(v.file) && v.isFile) {
+          v.meta = ymlObj.meta;
+        }
+      });
+    }
     curAst.dir = curDir;
     curAst.alias = `${this.alias}${replaceAlias(dir, this.dir)}/${file}`;
     curAst.file = camelize(replaceVue(fileLowerCase));
@@ -143,9 +160,11 @@ function generateRouteString(filesAst, pre) {
   }
   for (const item of filesAst) {
     if (
-      this.ignoreRegExp &&
-      (this.ignoreRegExp.test(item.file) ||
-        (item.parentName && this.ignoreRegExp.test(item.parentName.join(''))))
+      (this.ignoreRegExp &&
+        (this.ignoreRegExp.test(item.file) ||
+          (item.parentName &&
+            this.ignoreRegExp.test(item.parentName.join(''))))) ||
+      this.metaYmlReg.test(item.file)
     ) {
     } else {
       if (!item.isFile) {
@@ -156,6 +175,15 @@ function generateRouteString(filesAst, pre) {
           component: () => import('${item.alias}'),
           name:'${replaceDynamic(item.parentName.join('-'))}',
           `;
+        if (item.meta) {
+          this.routeString += `meta:{`;
+          for (const meta of item.meta) {
+            for (const key in meta) {
+              this.routeString += `${key}:${meta[key]},`;
+            }
+          }
+          this.routeString += `},`;
+        }
         if (Object.keys(nestCollections).length) {
           const curNest = this.nestArr[this.nestArr.length - 1].split('-');
           const res = diff(curNest, item.parentName);
