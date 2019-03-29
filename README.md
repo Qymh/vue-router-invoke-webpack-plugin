@@ -330,9 +330,9 @@ automatical generated route will be this
 
 ## Strong Lint
 
-As the title of our repository shows.This is also a lint plugin.
+In a multiplayer environment.Everyone has their own naming conventions
 
-Whatever the file you named.
+To a common format, Whatever the file you named.
 
 - `upperCamelCase` SomeName
 - `hyphenate` some-name
@@ -387,13 +387,48 @@ automatical generated route will be this
 },
 ```
 
-## Demos
-
-The detailed usage you can `git clone` our project and run `npm run build:demos` or you can just watch our [demos](https://github.com/Qymh/vue-router-invoke-webpack-plugin/tree/master/demos) directly.The demos dont't have substantial content,the more we focus is on the generation of directory,you can get how `router.js` generated in the demos.
-
 ## Meta Succedaneum
 
-[vue-meta](https://github.com/nuxt/vue-meta) is a fantastic repository which can help you resolve
+The `meta` option in `vue-router` can resolve many questions.Just like define the title of a page or define a page is necessary to login or not.
+
+Some of the questions just like define the page title can be resolved by [vue-meta](https://github.com/nuxt/vue-meta).That is a fantastic repository.
+
+But if you really need define the plain `meta` option of `vue-router` .You should make a `yml` file.
+
+For example
+
+``` javascript
+demos/src
+├── Single
+│   ├── Index.vue
+│   └── User
+│       ├── Index.vue
+│       └── meta.yml
+```
+
+`meta.yml`
+
+```yml
+meta:
+  - name: user
+```
+
+automatical generated route will be this
+
+```javascript
+{
+  component: () => import('@/src/Single/Index.vue'),
+  name: 'single',
+  path: 'single'
+},
+{
+  component: () => import('@/src/Single/User/Index.vue'),
+  name: 'single-user',
+  meta: { name: user },
+  path: 'single/user'
+}
+```
+
 
 ## Special Options
 
@@ -559,3 +594,7 @@ const router = new Router({
   }
 });
 ```
+
+## Demos
+
+The detailed usage you can `git clone` our project and run `npm run build:demos` or you can just watch our [demos](https://github.com/Qymh/vue-router-invoke-webpack-plugin/tree/master/demos) directly.The demos dont't have substantial content,the more we focus is on the generation of directory,you can get how `router.js` generated in the demos.
