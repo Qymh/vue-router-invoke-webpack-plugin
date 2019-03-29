@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const rimraf = require('rimraf');
 const VueRouterInvokeWebpackPlugin = require('../core');
-const { makeFile, removeFile } = require('./utils');
+const { makeFile, removeFile, writeFile } = require('./utils');
 function testPlugin(options, expectVal, notExpectVal) {
   webpack({
     resolve: {
@@ -112,6 +112,23 @@ describe('option', () => {
       },
       '{RouteConfig}'
     );
+  });
+
+  it('meta', () => {
+    makeFile('metaTest/login/Index.vue');
+    makeFile('metaTest/login/meta.yml');
+    writeFile(
+      'metaTest/login/meta.yml',
+      `
+      meta:
+        - name: metaTest
+    `
+    );
+    testPlugin(
+      { dir: 'tests/metaTest', alias: '@/metaTest' },
+      `meta\\:\\{name\\:metaTest`
+    );
+    removeFile('metaTest');
   });
 
   it('ignore', () => {

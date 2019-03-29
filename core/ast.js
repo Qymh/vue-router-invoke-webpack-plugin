@@ -114,7 +114,7 @@ function generateFilesAst(dir, filesAst, parent) {
       const ymlObj = yamljs.parse(ymlStr);
       parent.children.map(v => {
         if (!this.metaYmlReg.test(v.file) && v.isFile) {
-          v.meta = ymlObj.meta;
+          v.meta = ymlObj && ymlObj.meta;
         }
       });
     }

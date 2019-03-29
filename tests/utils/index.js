@@ -15,6 +15,10 @@ exports.makeFile = str => {
   fs.writeFileSync(path.resolve(tests, dir, file), '');
 };
 
+exports.writeFile = (file, str) => {
+  fs.writeFileSync(path.resolve(tests, file), str);
+};
+
 exports.removeFile = str => {
   rimraf.sync(path.resolve(tests, str));
 };
