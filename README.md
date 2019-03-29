@@ -9,6 +9,7 @@ This is a webpack plugin which can automatic generate your `vue-router` path and
 - [x] tests
 - [x] circleci
 - [x] resolve meta succedaneum
+- [] more friendly demos
 - [] 中文文档
 
 ## Install
@@ -35,14 +36,15 @@ yarn add vue-router-invoke-webpack-plugin -D
 
 ### Webpack
 
-- make sure you have set process.env.NODE_ENV in development environment is equal to `development` and in production environment is equal to `production`.You can do that by using `cross-env` or some others plugin.
+- make sure you have set process.env.NODE_ENV in development environment is equal to `development` and in production environment is equal to `production`.You can do that by using (cross-env)[https://github.com/kentcdodds/cross-env] or some other plugin.
 - make sure you have set the alias for `dir` option.
+- the generated route will be lazyload. So make sure you have add [@babel/plugin-syntax-dynamic-import](https://babeljs.io/docs/en/next/babel-plugin-syntax-dynamic-import.html)
 
 ```javascript
 const VueRouterInvokePlugin = require('vue-router-invoke-webpack-plugin');
 const path = require('path')
 
-// omit some others option...
+// omit some other option...
 
 resolve: {
   alias: {
@@ -93,6 +95,12 @@ module.exports = {
   }
 };
 ```
+
+### Start
+
+After configure the options you can use `npm run serve` or some other scripts that you defined to activate the plugin in the development environment. When the file which in the `dir` option's direction changes.`router.js` will be automatic generated.
+
+And you can use `npm run build` or some other scripts that you defined to activate the plugin in the production environment.
 
 ## Options
 
@@ -467,7 +475,7 @@ automatical generated route will be this
 
 ## Special Options
 
-### notFound
+### NotFound
 
 If your set options like this
 
@@ -476,6 +484,7 @@ plugins: [
   new VueRouterInvokePlugin({
     dir: 'src/views',
     alias: '@/views',
+    // muse set ignore for notFound chunk
     ignore: ['NotFound.vue'],
     notFound: '@/views/NotFound.vue'
   })
@@ -494,7 +503,7 @@ src
 
 ```
 
-the automatical route
+automatical generated route will be this
 
 ```javascript
 {
@@ -550,7 +559,7 @@ src
 │       └── Index.vue
 ```
 
-the automatical route
+automatical generated route will be this
 
 ```javascript
 {
@@ -593,7 +602,7 @@ plugins: [
 ];
 ```
 
-the automatical route
+automatical generated route will be this
 
 ```javascript
 {
@@ -608,7 +617,34 @@ the automatical route
 
 ### Modules
 
-ToDo
+The generated `router.js` has Two modules
+
+```javascript
+import Vue from 'vue';
+import Router from 'vue-router';
+```
+
+If you need some other module which would use in `beforeEach` or some other place you can define it by using `modules`. For example
+
+```javascript
+new VueRouterInvokePlugin({
+  dir: 'src/views',
+  alias: '@/views',
+  modules: [
+    {
+      name: 'diyName',
+      package: 'some-packages'
+    }
+  ]
+});
+```
+
+automatical generated route will be this
+
+```javascript
+// omit other options
+import diyName from 'some-packages';
+```
 
 ### VueRouter Guards
 
@@ -631,7 +667,7 @@ new VueRouterInvokePlugin({
 });
 ```
 
-the automatical route
+automatical generated route will be this
 
 ```javascript
 // omit others ...
@@ -667,7 +703,7 @@ new VueRouterInvokePlugin({
 });
 ```
 
-the automatical route
+automatical generated route will be this
 
 ```javascript
 // omit others...
