@@ -19,6 +19,7 @@ fi
 
 log "code review"
 npm run lint
+npm run test:single
 
 log "publish ${VERSION}"
 
