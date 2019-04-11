@@ -30,13 +30,13 @@ yarn add vue-router-invoke-webpack-plugin -D
 
 没有统一的命名,有人喜欢下划线,有人喜欢用驼峰
 
-![]()
+![image](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/master/docs/images/name.png)
 
 - 路由的层级
 
 明明是二级路由或者三级路由,放在了和一级路由一个目录下,且命名完全看不出来路由的层级
 
-![]()
+![image](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/master/docs/images/index_cn.png)
 
 - 新人难以接受
 
