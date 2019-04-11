@@ -5,5 +5,5 @@ demos/dist
 .DS_Store
 coverage
 
-.invoke
+tests/.invoke
 .vscode
