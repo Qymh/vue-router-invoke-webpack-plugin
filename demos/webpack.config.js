@@ -13,7 +13,8 @@ const base = {
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, './dist')
+    path: path.resolve(__dirname, './dist'),
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -40,11 +41,12 @@ const base = {
       alias: '@/src',
       language: 'javascript',
       routerDir: 'demos',
-      ignore: ['images', 'template.vue', 'components'],
-      redirect: [
+      ignore: ['images', 'template.vue', 'components', 'notfound.vue'],
+      notFound: '@/src/NotFound.vue',
+      modules: [
         {
-          path: '/',
-          redirect: '/redirect'
+          name: 'apis',
+          package: '@/apis'
         }
       ],
       scrollBehavior: (to, from, savedPosition) => {
@@ -54,9 +56,23 @@ const base = {
           return { x: 0, y: 0 };
         }
       },
-      beforeEach: (to, from, next) => {
-        next();
+      /* eslint-disable */
+      beforeEach: async (to, from, next) => {
+        if (!Vue._cachedForbiddenRoute) {
+          Vue._cachedForbiddenRoute = [];
+          await apis.getForbiddenRoute().then(res => {
+            Vue._cachedForbiddenRoute = res;
+          });
+        }
+        if (Vue._cachedForbiddenRoute.includes(to.path)) {
+          next({
+            name: 'notFound'
+          });
+        } else {
+          next();
+        }
       },
+      /* eslint-enable */
       beforeResolve: (to, from, next) => {
         next();
       },
@@ -84,7 +100,7 @@ if (isDev) {
     publicPath: '/',
     inline: true,
     quiet: true,
-    open: false,
+    open: true,
     clientLogLevel: 'warning',
     historyApiFallback: true
   };

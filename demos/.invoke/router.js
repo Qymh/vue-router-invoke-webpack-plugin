@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import apis from '@/apis';
 Vue.use(Router);
 export const routes = [
   {
@@ -89,8 +90,9 @@ export const routes = [
     path: '/single/user'
   },
   {
-    path: '/',
-    redirect: '/redirect'
+    name: 'notFound',
+    path: '*',
+    component: () => import('@/src/NotFound.vue')
   }
 ];
 const router = new Router({
@@ -104,8 +106,20 @@ const router = new Router({
     }
   }
 });
-router.beforeEach((to, from, next) => {
-  next();
+router.beforeEach(async (to, from, next) => {
+  if (!Vue._cachedForbiddenRoute) {
+    Vue._cachedForbiddenRoute = [];
+    await apis.getForbiddenRoute().then(res => {
+      Vue._cachedForbiddenRoute = res;
+    });
+  }
+  if (Vue._cachedForbiddenRoute.includes(to.path)) {
+    next({
+      name: 'notFound'
+    });
+  } else {
+    next();
+  }
 });
 
 router.beforeResolve((to, from, next) => {

@@ -107,7 +107,7 @@ exports.generateModules = function(options) {
   let str = '';
   if (options.modules) {
     for (const module of options.modules) {
-      str += `import ${module.name} from ${module.package};`;
+      str += `import ${module.name} from '${module.package}';`;
     }
   }
   return str;
