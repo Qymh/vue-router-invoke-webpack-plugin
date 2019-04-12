@@ -120,22 +120,22 @@ And you can use `npm run build` or some other scripts that you defined to activa
 
 ## Options
 
-| Prop           |   Type   | Required |  Default   |                              Description |
-| -------------- | :------: | :------: | :--------: | ---------------------------------------: |
-| dir            |  String  |   true   |     ''     |                       vue file directory |
-| alias          |  String  |   true   |     ''     |                 the option `dir`'s alias |
-| notFound       |  String  |  false   |     ''     |      the alias address of notFound chunk |
-| mode           |  String  |  false   |  history   |                          hash or history |
-| meta           |  String  |  false   |    meta    |                      the yml file's name |
-| routerDir      |  String  |  false   |    ROOT    |                 generated router.js file |
-| language       |  String  |  false   | javascript |                 javascript or typescript |
-| ignore         |  Array   |  false   |     []     | files or directions will not be resolved |
-| redirect       |  Array   |  false   |     []     |                           redirect route |
-| modules        |  Array   |  false   |     []     |                       the import modules |
-| scrollBehavior | Function |  false   |     ''     |                   same as scrollBehavior |
-| beforeEach     | Function |  false   |     ''     |                        router.beforeEach |
-| beforeResolve  | Function |  false   |     ''     |                     router.beforeResolve |
-| afterEach      | Function |  false   |     ''     |                         router.afterEach |
+| Prop           |   Type   | Required |   Default    |                              Description |
+| -------------- | :------: | :------: | :----------: | ---------------------------------------: |
+| dir            |  String  |   true   |      ''      |                       vue file directory |
+| alias          |  String  |   true   |      ''      |                 the option `dir`'s alias |
+| notFound       |  String  |  false   |      ''      |      the alias address of notFound chunk |
+| mode           |  String  |  false   |   history    |                          hash or history |
+| meta           |  String  |  false   |     meta     |                      the yml file's name |
+| routerDir      |  String  |  false   |     ROOT     |                 generated router.js file |
+| language       |  String  |  false   |  javascript  |                 javascript or typescript |
+| ignore         |  Array   |  false   | ['.dsstore'] | files or directions will not be resolved |
+| redirect       |  Array   |  false   |      []      |                           redirect route |
+| modules        |  Array   |  false   |      []      |                       the import modules |
+| scrollBehavior | Function |  false   |      ''      |                   same as scrollBehavior |
+| beforeEach     | Function |  false   |      ''      |                        router.beforeEach |
+| beforeResolve  | Function |  false   |      ''      |                     router.beforeResolve |
+| afterEach      | Function |  false   |      ''      |                         router.afterEach |
 
 ## How To Automatical Invoke
 

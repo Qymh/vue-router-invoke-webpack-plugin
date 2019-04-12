@@ -118,22 +118,22 @@ module.exports = {
 
 ### 配置
 
-| Prop           |   Type   | Required |  Default   |                Description |
-| -------------- | :------: | :------: | :--------: | -------------------------: |
-| dir            |  String  |   true   |     ''     |        观察的 vue 文件目录 |
-| alias          |  String  |   true   |     ''     |  观察的 vue 文件目录的别名 |
-| notFound       |  String  |  false   |     ''     |                   404 路由 |
-| mode           |  String  |  false   |  history   |          hash 或者 history |
-| meta           |  String  |  false   |    meta    |    定义 meta 的 yml 文件名 |
-| routerDir      |  String  |  false   |    ROOT    |  构建后的 router.js 的位置 |
-| language       |  String  |  false   | javascript | javascript 或者 typescript |
-| ignore         |  Array   |  false   |     []     |       忽略的文件或者文件夹 |
-| redirect       |  Array   |  false   |     []     |                 重定向路由 |
-| modules        |  Array   |  false   |     []     |             导入的其他模块 |
-| scrollBehavior | Function |  false   |     ''     |          同 scrollBehavior |
-| beforeEach     | Function |  false   |     ''     |          router.beforeEach |
-| beforeResolve  | Function |  false   |     ''     |       router.beforeResolve |
-| afterEach      | Function |  false   |     ''     |           router.afterEach |
+| Prop           |   Type   | Required |   Default    |                Description |
+| -------------- | :------: | :------: | :----------: | -------------------------: |
+| dir            |  String  |   true   |      ''      |        观察的 vue 文件目录 |
+| alias          |  String  |   true   |      ''      |  观察的 vue 文件目录的别名 |
+| notFound       |  String  |  false   |      ''      |                   404 路由 |
+| mode           |  String  |  false   |   history    |          hash 或者 history |
+| meta           |  String  |  false   |     meta     |    定义 meta 的 yml 文件名 |
+| routerDir      |  String  |  false   |     ROOT     |  构建后的 router.js 的位置 |
+| language       |  String  |  false   |  javascript  | javascript 或者 typescript |
+| ignore         |  Array   |  false   | ['.dsstore'] |       忽略的文件或者文件夹 |
+| redirect       |  Array   |  false   |      []      |                 重定向路由 |
+| modules        |  Array   |  false   |      []      |             导入的其他模块 |
+| scrollBehavior | Function |  false   |      ''      |          同 scrollBehavior |
+| beforeEach     | Function |  false   |      ''      |          router.beforeEach |
+| beforeResolve  | Function |  false   |      ''      |       router.beforeResolve |
+| afterEach      | Function |  false   |      ''      |           router.afterEach |
 
 ## 如何使用自动注入
 

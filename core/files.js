@@ -59,9 +59,9 @@ exports.getWatchDir = function(options) {
 };
 
 exports.generateIgnoreFiles = function(options) {
-  if (!options.ignore) {
-    return;
-  }
+  options.ignore = options.ignore
+    ? [...options.ignore, '.dsstore']
+    : ['.dsstore'];
   options.ignore = options.ignore.map(replaceVue);
   let reg = new RegExp(`(${options.ignore.join('|')})`, 'ig');
   this.ignoreRegExp = reg;
