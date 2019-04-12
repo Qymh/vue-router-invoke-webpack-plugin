@@ -16,6 +16,7 @@
     "type": "git",
     "url": "git+https://github.com/Qymh/vue-router-invoke-webpack-plugin.git"
   },
+  "typings": "types/index.d.ts",
   "license": "MIT",
   "scripts": {
     "check": "yarn upgrade-interactive --latest",
