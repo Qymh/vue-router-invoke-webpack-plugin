@@ -171,7 +171,7 @@ function generateRouteString(filesAst, pre) {
         (item.parentName && this.ignoreRegExp.test(item.parentName.join(''))))
     ) {
     } else {
-      // fix: must use multiple to judge
+      // maybe node's bug: must use twice to judge
       if (
         this.ignoreRegExp &&
         (this.ignoreRegExp.test(item.file) ||
