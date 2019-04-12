@@ -189,7 +189,7 @@ describe('option', () => {
           }
         ]
       },
-      `importsomefromSome`
+      `importsomefrom\\'Some\\'`
     );
   });
 
