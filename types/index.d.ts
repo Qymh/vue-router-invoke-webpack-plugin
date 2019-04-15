@@ -1,8 +1,7 @@
 import { VueRouterInvokeWebpackPluginOptions } from './options';
-interface VueRouterInvokeWebpackPluginConstructor {
-  new (options: VueRouterInvokeWebpackPluginOptions);
+
+declare class VueRouterInvokeWebpackPlugin {
+  constructor(options: VueRouterInvokeWebpackPluginOptions);
 }
 
-declare const VueRouterInvokeWebpackPlugin: VueRouterInvokeWebpackPluginConstructor;
-
-export default VueRouterInvokeWebpackPlugin;
+export = VueRouterInvokeWebpackPlugin;
