@@ -264,7 +264,7 @@ src
 │   ├── Login
 │   │   └── Index.vue
 │   └── User
-│       ├── :Home
+│       ├── _Home
 │       │   └── Index.vue
 │       └── Index.vue
 ```
@@ -286,7 +286,7 @@ automatical generated route will be this
 },
 {
   component: () =>
-    import('@/views/User/:Home/Index.vue'),
+    import('@/views/User/_Home/Index.vue'),
   name: 'user-home',
   path: '/user/:home'
 }
@@ -350,8 +350,8 @@ src
 │   ├── Login
 │   │   └── Index.vue
 │   └── User
-│       ├── :Category
-│       │   ├── :Category.vue
+│       ├── _Category
+│       │   ├── _Category.vue
 │       │   └── Infor
 │       │       └── Index.vue
 │       └── Index.vue
@@ -374,13 +374,13 @@ automatical generated route will be this
   },
   {
     component: () =>
-      import('@/views/User/:Category/:Category.vue'),
+      import('@/views/User/_Category/_Category.vue'),
     name: 'user-category',
     path: '/user/:category',
     children: [
       {
         component: () =>
-          import('@/views/User/:Category/Infor/Index.vue'),
+          import('@/views/User/_Category/Infor/Index.vue'),
         name: 'user-category-infor',
         path: 'infor'
       }

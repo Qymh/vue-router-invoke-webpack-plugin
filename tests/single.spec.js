@@ -24,7 +24,6 @@ function testPlugin(options, expectVal, notExpectVal) {
     );
     file = file.replace(/\s/g, '');
     if (expectVal) {
-      // console.log(new RegExp(expectVal, 'gi'));
       expect(new RegExp(expectVal, 'gi').test(file)).toBeTruthy();
     } else {
       expect(new RegExp(notExpectVal, 'gi').test(file)).toBeFalsy();

@@ -7,8 +7,8 @@ const {
   camelize,
   replaceVue,
   firstLowerCase,
-  replaceDynamic,
   replaceAlias,
+  replaceArtificialDynamic,
   makeMap,
   diff
 } = require('./utils');
@@ -191,7 +191,9 @@ function generateRouteString(filesAst, pre) {
               component: () => import('${item.alias}'),
               name:'${
                 item.parentName.length
-                  ? replaceDynamic(item.parentName.join('-'))
+                  ? item.parentName
+                      .map(v => replaceArtificialDynamic(v))
+                      .join('-')
                   : 'index'
               }',
               `;
@@ -204,7 +206,6 @@ function generateRouteString(filesAst, pre) {
               }
               this.routeString += `},`;
             }
-
             if (Object.keys(nestCollections).length) {
               const curNest = this.nestArr[this.nestArr.length - 1].split('-');
               const res = diff(curNest, item.parentName);

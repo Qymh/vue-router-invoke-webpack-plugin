@@ -42,7 +42,7 @@ describe('nestRoute', () => {
   });
 
   it('yakitori name', () => {
-    makeFile('nestT/:Parent/:Parent.vue');
+    makeFile('nestT/_Parent/_Parent.vue');
     testPlugin(
       { dir: 'tests/nestT', alias: '@/nestT' },
       `name\\:\\'parent\\',path\\:\\'\\/\\:parent\\',children\\:\\[\\]`
@@ -51,7 +51,7 @@ describe('nestRoute', () => {
   });
 
   it('underlinename', () => {
-    makeFile('nestT/:Parent_Name/:Parent_Name.vue');
+    makeFile('nestT/_Parent_Name/_Parent_Name.vue');
     testPlugin(
       { dir: 'tests/nestT', alias: '@/nestT' },
       `name\\:\\'parentName\\',path\\:\\'\\/\\:parentName\\',children\\:\\[\\]`
@@ -60,7 +60,7 @@ describe('nestRoute', () => {
   });
 
   it('lowercase name', () => {
-    makeFile('nestT/:parent_name/:parent_name.vue');
+    makeFile('nestT/_parent_name/_parent_name.vue');
     testPlugin(
       { dir: 'tests/nestT', alias: '@/nestT' },
       `name\\:\\'parentName\\',path\\:\\'\\/\\:parentName\\',children\\:\\[\\]`
@@ -69,7 +69,7 @@ describe('nestRoute', () => {
   });
 
   it('uppercase name', () => {
-    makeFile('nestT/:PARENT_NAME/:PARENT_NAME.vue');
+    makeFile('nestT/_PARENT_NAME/_PARENT_NAME.vue');
     testPlugin(
       { dir: 'tests/nestT', alias: '@/nestT' },
       `name\\:\\'parentName\\',path\\:\\'\\/\\:parentName\\',children\\:\\[\\]`
@@ -78,8 +78,8 @@ describe('nestRoute', () => {
   });
 
   it('multiple', () => {
-    makeFile('nestT/:parent_name/:parent_name.vue');
-    makeFile('nestT/:parent_name/Child/Index.vue');
+    makeFile('nestT/_parent_name/_parent_name.vue');
+    makeFile('nestT/_parent_name/Child/Index.vue');
     testPlugin(
       { dir: 'tests/nestT', alias: '@/nestT' },
       `(name\\:\\'parentName\\',path\\:\\'\\/\\:parentName\\',children\\:\\[\\]|name\\:\\'parentName-child\\',path\\:\\'child\\')`

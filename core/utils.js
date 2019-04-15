@@ -7,7 +7,7 @@ exports.warn = msg => {
 };
 
 exports.firstLowerCase = ([first, ...rest]) => {
-  if (first === ':') {
+  if (first === '_') {
     return first + rest.shift().toLowerCase() + rest.join('');
   } else {
     return first.toLowerCase() + rest.join('');
@@ -20,7 +20,10 @@ exports.replaceAlias = (str, dir) => {
 
 exports.replaceVue = str => str.replace(/\.vue/g, '');
 
-exports.camelize = str => str.replace(/[-_](\w)/g, (_, c) => c.toUpperCase());
+exports.camelize = str =>
+  str.replace(/[-_](\w)/g, (_, c, i) => {
+    return i === 0 ? `:${c}` : c.toUpperCase();
+  });
 
 exports.makeMap = str => {
   const map = Object.create(null);
@@ -31,7 +34,7 @@ exports.makeMap = str => {
   return val => map[val];
 };
 
-exports.replaceDynamic = str => str.replace(/:/g, '');
+exports.replaceArtificialDynamic = str => str.replace(/:/g, '');
 
 exports.diff = (a, b) => {
   const aSet = new Set(a);

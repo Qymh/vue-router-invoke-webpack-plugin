@@ -33,7 +33,7 @@ function testPlugin(options, expectVal, notExpectVal) {
 
 describe('dynamicRoute', () => {
   it('hump name', () => {
-    makeFile('dynamicT/:Dynamic/Index.vue');
+    makeFile('dynamicT/_Dynamic/Index.vue');
     testPlugin(
       { dir: 'tests/dynamicT', alias: '@/dynamicT' },
       `name\\:\\'dynamic\\',path\\:\\'\\/\\:dynamic\\'`
@@ -42,7 +42,7 @@ describe('dynamicRoute', () => {
   });
 
   it('yakitori name', () => {
-    makeFile('dynamicT/:Dynamic-Name/Index.vue');
+    makeFile('dynamicT/_Dynamic-Name/Index.vue');
     testPlugin(
       { dir: 'tests/dynamicT', alias: '@/dynamicT' },
       `name\\:\\'dynamicName\\',path\\:\\'\\/\\:dynamicName\\'`
@@ -51,7 +51,7 @@ describe('dynamicRoute', () => {
   });
 
   it('underlinename', () => {
-    makeFile('dynamicT/:Dynamic_Name/Index.vue');
+    makeFile('dynamicT/_Dynamic_Name/Index.vue');
     testPlugin(
       { dir: 'tests/dynamicT', alias: '@/dynamicT' },
       `name\\:\\'dynamicName\\',path\\:\\'\\/\\:dynamicName\\'`
@@ -60,7 +60,7 @@ describe('dynamicRoute', () => {
   });
 
   it('lowercase name', () => {
-    makeFile('dynamicT/:dynamic_name/index.vue');
+    makeFile('dynamicT/_dynamic_name/index.vue');
     testPlugin(
       { dir: 'tests/dynamicT', alias: '@/dynamicT' },
       `name\\:\\'dynamicName\\',path\\:\\'\\/\\:dynamicName\\'`
@@ -69,7 +69,7 @@ describe('dynamicRoute', () => {
   });
 
   it('uppercase name', () => {
-    makeFile('dynamicT/:DYNAMIC_NAME/INDEX.vue');
+    makeFile('dynamicT/_DYNAMIC_NAME/INDEX.vue');
     testPlugin(
       { dir: 'tests/dynamicT', alias: '@/dynamicT' },
       `name\\:\\'dynamicName\\',path\\:\\'\\/\\:dynamicName\\'`
@@ -78,8 +78,8 @@ describe('dynamicRoute', () => {
   });
 
   it('multiple', () => {
-    makeFile('dynamicT/:dynamic_name/index.vue');
-    makeFile('dynamicT/:dynamic_name/:dynamic_inner.vue');
+    makeFile('dynamicT/_dynamic_name/index.vue');
+    makeFile('dynamicT/_dynamic_name/:dynamic_inner.vue');
     testPlugin(
       { dir: 'tests/dynamicT', alias: '@/dynamicT' },
       `(name\\:\\'dynamicName\\',path\\:\\'\\/\\:dynamicName\\'|name\\:\\'dynamicName-dynamicInner\\',path\\:\\'\\/\\:dynamicName\\/\\:dynamicInner\\')`

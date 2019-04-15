@@ -50,7 +50,7 @@ export const routes = [
     path: '/dynamic'
   },
   {
-    component: () => import('@/src/Dynamic/:User/Index.vue'),
+    component: () => import('@/src/Dynamic/_User/Index.vue'),
     name: 'dynamic-user',
     meta: { name: 'user' },
     path: '/dynamic/:user'
@@ -72,7 +72,7 @@ export const routes = [
         path: 'account'
       },
       {
-        component: () => import('@/src/Nest/Home/Account/:Id/Index.vue'),
+        component: () => import('@/src/Nest/Home/Account/_Id/Index.vue'),
         name: 'nest-home-account-id',
         path: 'account/:id'
       }
@@ -84,10 +84,10 @@ export const routes = [
     path: '/single'
   },
   {
-    component: () => import('@/src/Single/User/Index.vue'),
-    name: 'single-user',
+    component: () => import('@/src/Single/User-Name/Index.vue'),
+    name: 'single-userName',
     meta: { name: 'user' },
-    path: '/single/user'
+    path: '/single/userName'
   },
   {
     name: 'notFound',
