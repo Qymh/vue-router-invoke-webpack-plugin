@@ -163,6 +163,8 @@ And import `router.js` in your entry file `src/main.js`
 
 The default location of `router.js` is under the invoke folder in the root directory,You can change the location anywhere by setting the `routerDir` option
 
+And I recommoned that `router.js` may put into `.gitignore` or `.eslintignore`. Everyone's branch can be independent because `router.js` will be automatic generated
+
 ```javascript
 import Vue from 'vue';
 import App from './App.vue';
