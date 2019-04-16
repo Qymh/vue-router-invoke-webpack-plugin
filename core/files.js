@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs');
+const fse = require('fs-extra');
 const chokidar = require('chokidar');
 const { replaceVue } = require('./utils');
 const isFile = dir => fs.statSync(dir).isFile();
@@ -15,11 +16,9 @@ exports.root = root;
 function writeFile(options) {
   if (!fs.existsSync(this.routerDir)) {
     if (options.routerDir) {
-      fs.mkdirSync(`${root}/${options.routerDir}/.invoke`, {
-        recursive: true
-      });
+      fse.ensureDirSync(`${root}/${options.routerDir}/.invoke`);
     } else {
-      fs.mkdirSync(`${root}/.invoke`, { recursive: true });
+      fse.ensureDirSync(`${root}/.invoke`);
     }
     fs.writeFileSync(this.routerDir, this.routeString);
     isRunning = false;
