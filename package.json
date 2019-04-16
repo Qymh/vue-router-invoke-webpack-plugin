@@ -1,6 +1,6 @@
 {
   "name": "vue-router-invoke-webpack-plugin",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "automatic generate your vue-router path and stronger normalize your file directory",
   "main": "core/index.js",
   "author": {
