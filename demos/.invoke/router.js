@@ -22,7 +22,11 @@ import Vue from 'vue';import Router from 'vue-router';import apis from '@/apis';
             {
               component: () => import('@/src/Complex/Home/Details/Infor/Index.vue'),
               name:'complex-home-details-infor',
-              path:'infor',},],},],},
+              path:'infor',},
+            {
+              component: () => import('@/src/Complex/Home/Details/Intro/Index.vue'),
+              name:'complex-home-details-intro',
+              path:'intro',},],},],},
             {
               component: () => import('@/src/Complex/Login/Index.vue'),
               name:'complex-login',
@@ -32,9 +36,9 @@ import Vue from 'vue';import Router from 'vue-router';import apis from '@/apis';
               name:'dynamic',
               path:'/dynamic',},
             {
-              component: () => import('@/src/Dynamic/_User/Index.vue'),
-              name:'dynamic-user',
-              meta:{name:'user',},path:'/dynamic/:user',},
+              component: () => import('@/src/Dynamic/_UserForm/Index.vue'),
+              name:'dynamic-userForm',
+              meta:{name:'user',},path:'/dynamic/:userForm',},
             {
               component: () => import('@/src/Nest/Index.vue'),
               name:'nest',
@@ -51,10 +55,6 @@ import Vue from 'vue';import Router from 'vue-router';import apis from '@/apis';
               component: () => import('@/src/Nest/Home/Account/_Id/Index.vue'),
               name:'nest-home-account-id',
               path:'account/:id',},],},
-            {
-              component: () => import('@/src/Single/Index.vue'),
-              name:'single',
-              path:'/single',},
             {
               component: () => import('@/src/Single/User-Name/Index.vue'),
               name:'single-userName',

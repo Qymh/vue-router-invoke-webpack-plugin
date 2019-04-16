@@ -135,6 +135,20 @@ function generateFilesAst(dir, filesAst, parent) {
       curAst.parentName = [];
     }
     filesAst.push(curAst);
+
+    // fix empty vue
+    if (
+      curAst.isFile &&
+      !(
+        curAst.file === parent.file ||
+        (curAst.file && curAst.file.toLowerCase() === 'index') ||
+        parent.file === undefined ||
+        (this.metaYmlReg && this.metaYmlReg.test(curAst.file))
+      )
+    ) {
+      curAst.ignore = true;
+    }
+
     if (!curAst.isFile) {
       curAst.children = [];
       generateFilesAst.call(this, `${dir}/${file}`, curAst.children, curAst);
@@ -170,6 +184,9 @@ function generateRouteString(filesAst, pre) {
       (this.ignoreRegExp.test(item.file) ||
         (item.parentName && this.ignoreRegExp.test(item.parentName.join(''))))
     ) {
+    }
+    // fix when non-compliance file
+    else if (item.ignore) {
     } else {
       // maybe node's bug: must use twice to judge
       if (
@@ -215,6 +232,10 @@ function generateRouteString(filesAst, pre) {
             }
             if (item.isNest) {
               this.nestArr.push(item.parentName.join('-'));
+              // fix when directory is empty and non-compliance file
+              pre.children = pre.children.filter(v => {
+                return (v.children && v.children.length) !== 0 && !v.ignore;
+              });
               nestCollections[item.parentName.join('-')] =
                 pre.children.length - 1;
               this.routeString += `children:[`;
@@ -233,8 +254,14 @@ function generateRouteString(filesAst, pre) {
                   nestCollections[v]--;
                 }
               });
+              // fix when meta.yml is empty
+              if (item.meta !== undefined) {
+                nestCollections[pre.parentName.join('-')] -= 1;
+              }
+              // fix when nested route which has more than two childish routes
               if (pre.children.length >= 2) {
-                nestCollections[pre.parentName.join('-')]++;
+                nestCollections[pre.parentName.join('-')] +=
+                  pre.children.length - 1;
               }
               let count = 0;
               for (const key in nestCollections) {
