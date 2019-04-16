@@ -1,8 +1,11 @@
 'use strict';
 
 const fs = require('fs');
+const chokidar = require('chokidar');
 const { replaceVue } = require('./utils');
 const isFile = dir => fs.statSync(dir).isFile();
+
+let isRunning = false;
 
 exports.isFile = isFile;
 
@@ -19,17 +22,21 @@ function writeFile(options) {
       fs.mkdirSync(`${root}/.invoke`, { recursive: true });
     }
     fs.writeFileSync(this.routerDir, this.routeString);
+    isRunning = false;
   } else {
     fs.writeFileSync(this.routerDir, this.routeString);
+    isRunning = false;
   }
 }
 
 function watchFile(options, start) {
   writeFile.call(this, options);
-  fs.watch(this.watchDir, { recursive: true }, type => {
-    if (type === 'change') {
+  let watcher = chokidar.watch(this.watchDir, { persistent: true });
+  watcher.on('raw', event => {
+    if (event === 'modified' || isRunning) {
       return;
     }
+    isRunning = true;
     start.call(this, options);
     writeFile.call(this, options);
   });
