@@ -247,30 +247,25 @@ describe('option', () => {
     );
   });
 
-  // eslint-disable-next-line
   it('watchFiles', done => {
     process.env.NODE_ENV = 'development';
     testPlugin({
       dir: 'tests/single',
       alias: '@/single'
     });
+    process.env.NODE_ENV = 'test';
     removeFile('single/watch');
-    makeFile('single/watch/Index.vue');
-    fs.writeFileSync(
-      path.resolve(process.cwd(), 'tests/single/Login/Index.vue'),
-      456
-    );
     setTimeout(() => {
-      let file = fs.readFileSync('tests/.invoke/router.js', 'utf-8');
-      file = file.replace(/\s/g, '');
-      expect(new RegExp(`name\\:\\'watch\\',path\\:\\'\\/watch\\'`).test(file));
-      fs.writeFileSync(
-        path.resolve(process.cwd(), 'tests/single/Login/Index.vue'),
-        456
-      );
-      removeFile('single/watch');
-      process.env.NODE_ENV = 'test';
-      done();
-    }, 1000);
+      makeFile('single/watch/Index.vue');
+      setTimeout(() => {
+        let file = fs.readFileSync('tests/.invoke/router.js', 'utf-8');
+        file = file.replace(/\s/g, '');
+        expect(
+          new RegExp(`name\\:\\'watch\\',path\\:\\'\\/watch\\'`).test(file)
+        );
+        removeFile('single/watch');
+        done();
+      }, 1000);
+    }, 100);
   });
 });

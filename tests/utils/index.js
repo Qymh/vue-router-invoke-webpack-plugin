@@ -1,8 +1,8 @@
 'use strict';
+const fse = require('fs-extra');
 const fs = require('fs');
 const path = require('path');
 const tests = path.resolve(process.cwd(), 'tests');
-const rimraf = require('rimraf');
 
 exports.makeFile = str => {
   str = str.split('/');
@@ -11,7 +11,7 @@ exports.makeFile = str => {
   }
   const file = str.pop();
   const dir = str.join('/');
-  fs.mkdirSync(path.resolve(tests, dir), { recursive: true });
+  fse.ensureDirSync(path.resolve(tests, dir));
   fs.writeFileSync(path.resolve(tests, dir, file), '');
 };
 
@@ -20,5 +20,5 @@ exports.writeFile = (file, str) => {
 };
 
 exports.removeFile = str => {
-  rimraf.sync(path.resolve(tests, str));
+  fse.removeSync(path.resolve(tests, str));
 };

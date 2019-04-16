@@ -16,6 +16,9 @@
     "type": "git",
     "url": "git+https://github.com/Qymh/vue-router-invoke-webpack-plugin.git"
   },
+  "engines": {
+    "node": ">=8.15.1"
+  },
   "typings": "types/index.d.ts",
   "license": "MIT",
   "scripts": {
@@ -27,7 +30,7 @@
     "lint": "npm run lint:js && npm run lint:style",
     "dev:demos": "cross-env NODE_ENV=development webpack-dev-server --config demos/webpack.config.js",
     "build:demos": "cross-env NODE_ENV=production webpack --config demos/webpack.config.js",
-    "test": "jest --coverage --watchAll --detectOpenHandles",
+    "test": "jest --coverage --watchAll",
     "test:single": "jest --coverage --detectOpenHandles",
     "pub": "npm config set registry https://registry.npmjs.org && bash scripts/publish.sh"
   },
@@ -50,6 +53,7 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^5.2.2",
+    "fs-extra": "^7.0.1",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^1.3.1",
     "jest": "^24.5.0",
