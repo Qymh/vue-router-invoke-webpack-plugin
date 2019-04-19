@@ -85,7 +85,7 @@ export const routes = [
     ]
   },
   {
-    component: () => import('@/src/Single/INDEX.vue'),
+    component: () => import('@/src/Single/Index.vue'),
     name: 'single',
     path: '/single'
   },

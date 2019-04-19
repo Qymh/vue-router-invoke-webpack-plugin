@@ -142,7 +142,7 @@ function generateFilesAst(dir, filesAst, parent) {
       !(
         curAst.file === parent.file ||
         (curAst.file && curAst.file.toLowerCase() === 'index') ||
-        parent.file === undefined ||
+        parent.file !== undefined ||
         (this.metaYmlReg && this.metaYmlReg.test(curAst.file))
       )
     ) {
