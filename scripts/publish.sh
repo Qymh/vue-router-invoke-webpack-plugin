@@ -7,9 +7,9 @@ log() {
 
 branch=`sh -c 'git branch --no-color 2> /dev/null' | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/' -e 's/\//\_/g'`
 
-if [ $branch != "master"]
+if [ $branch != "master" ]
 then
-  log only master branch can publish code
+  log 'only master branch can publish code'
   exit
 fi
 
