@@ -96,6 +96,11 @@ export const routes = [
     ]
   },
   {
+    component: () => import('@/src/Nest/test/index.vue'),
+    name: 'nest-test',
+    path: '/nest/test'
+  },
+  {
     component: () => import('@/src/Single/Index.vue'),
     name: 'single',
     path: '/single'

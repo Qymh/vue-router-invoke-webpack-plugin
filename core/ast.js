@@ -128,6 +128,7 @@ function generateFilesAst(dir, filesAst, parent) {
     }
     curAst.dir = curDir;
     curAst.alias = `${this.alias}${replaceAlias(dir, this.dir)}/${file}`;
+    curAst.isVue = /\.vue$/.test(fileLowerCase);
     curAst.file = camelize(replaceVue(fileLowerCase));
     curAst.isFile = isFile(curDir);
     if (parent) {
@@ -146,14 +147,18 @@ function generateFilesAst(dir, filesAst, parent) {
       curAst.ignore = true;
     }
 
+    let multipleError;
+
     // fix empty vue
     if (
-      curAst.isFile &&
-      !(
-        curAst.file === parent.file ||
-        (curAst.file && curAst.file.toLowerCase() === 'index') ||
-        (this.metaYmlReg && this.metaYmlReg.test(curAst.file))
-      )
+      (curAst.isFile &&
+        !(
+          curAst.file === parent.file ||
+          (curAst.file && curAst.file.toLowerCase() === 'index') ||
+          (this.metaYmlReg && this.metaYmlReg.test(curAst.file))
+        )) ||
+      (multipleError =
+        parent.children && parent.children.filter(v => v.isVue).length === 2)
     ) {
       if (
         !this.ignoreRegExp.test(
@@ -170,15 +175,19 @@ function generateFilesAst(dir, filesAst, parent) {
         } else {
           curAst.ignore = true;
           tips(
-            `\n'${
-              curAst.alias
-            }'is not in accordance with the rules \n you can not name it directly without a file wraps it \n you may check the correct use in documentation https://github.com/Qymh/vue-router-invoke-webpack-plugin#singleroute\n or you should make sure you have set it in the ignore option`
+            `\n'${curAst.alias}' ${
+              multipleError
+                ? 'is mixed with nested and single route'
+                : 'is not in accordance with the rules \n you can not name it directly without a file wraps it '
+            }\n you may check the correct use in documentation https://github.com/Qymh/vue-router-invoke-webpack-plugin#singleroute\n or you should make sure you have set it in the ignore option`
           );
           if (this.isFirst) {
             warn(
-              `\n'${
-                curAst.alias
-              }'is not in accordance with the rules \n you can not name it directly without a file wraps it \n you may check the correct use in documentation https://github.com/Qymh/vue-router-invoke-webpack-plugin#singleroute\n or you should make sure you have set it in the ignore option`
+              `\n'${curAst.alias}' ${
+                multipleError
+                  ? 'is mixed by nested and single route'
+                  : 'is not in accordance with the rules \n you can not name it directly without a file wraps it '
+              }\n you may check the correct use in documentation https://github.com/Qymh/vue-router-invoke-webpack-plugin#singleroute\n or you should make sure you have set it in the ignore option`
             );
           }
         }
