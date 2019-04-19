@@ -191,7 +191,7 @@ If your version > 0.2.6, The plugin will throw an error when the wrong naming of
 
 So if you see that
 
-![image](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/master/docs/images/name.png)
+![image](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/master/docs/images/notice.png)
 
 The rule of naming about your directory maybe wrong
 

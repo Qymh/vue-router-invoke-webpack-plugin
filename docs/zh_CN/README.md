@@ -185,7 +185,7 @@ export default new Vue({
 
 > 0.2.6 的版本我们引入了暴力提醒 第一次打包的时候如果命名规则和期望值不同,插件会直接报错,在开发环境下插件不会中断程序运行,但会高亮报错信息,比如这样
 
-![image](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/master/docs/images/name.png)
+![image](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/master/docs/images/notice.png)
 
 如果你发现此类的提醒,可以检查下文件格式是否符合规则
 
