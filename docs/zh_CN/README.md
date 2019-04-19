@@ -183,7 +183,7 @@ export default new Vue({
 
 同样的,也不要去命名文件夹名字为`Index`这会与嵌套路由的判断产生歧义
 
-> 0.2.6 的版本我们引入了暴力提醒 第一次打包的时候如果命名规则和期望值不同,插件会直接报错,在开发环境下插件不会中断程序运行,但会高亮报错信息,比如这样
+> 0.2.7 的版本我们引入了暴力提醒 第一次打包的时候如果命名规则和期望值不同,插件会直接报错,在开发环境下插件不会中断程序运行,但会高亮报错信息,比如这样
 
 ![image](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/master/docs/images/notice.png)
 
