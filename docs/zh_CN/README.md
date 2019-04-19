@@ -161,6 +161,8 @@ module.exports = {
 
 默认生成的`router.js`的位置在项目根路由的`.invoke`文件夹中,你可以通过`routerDir`这个配置更改默认位置
 
+要注意的是`routerDir`是相对于根路由的地址,而不是绝对地址哦
+
 我们建议把生成的`router.js`放在`.gitignore`和`.eslintignore`中,它没有必要被版本控制或者 eslint 校验,因为它是自动生成的
 
 ```javascript

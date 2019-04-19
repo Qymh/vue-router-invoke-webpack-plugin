@@ -165,6 +165,8 @@ And import `router.js` in your entry file `src/main.js`
 
 The default location of `router.js` is under the invoke folder in the root directory,You can change the location anywhere by setting the `routerDir` option
 
+The address of `routerDir` is relative to `ROOT`, Pay attention to that it is not a absolute address
+
 And I recommoned that `router.js` may put into `.gitignore` or `.eslintignore`. Everyone's branch can be independent because `router.js` will be automatic generated
 
 ```javascript
