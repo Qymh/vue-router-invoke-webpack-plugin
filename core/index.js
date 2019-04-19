@@ -8,9 +8,18 @@ class VueRouterInvokeWebpackPlugin {
   }
 
   apply(compiler) {
-    compiler.hooks.entryOption.tap('invoke', () => {
-      invoke.call(this, this.$options);
-    });
+    // webpack4
+    if (compiler && compiler.hooks && compiler.entryOption) {
+      compiler.hooks.entryOption.tap('invoke', () => {
+        invoke.call(this, this.$options);
+      });
+    }
+    // webpack3
+    else {
+      compiler.plugin('entry-option', () => {
+        invoke.call(this, this.$options);
+      });
+    }
   }
 }
 
