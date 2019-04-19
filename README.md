@@ -181,6 +181,10 @@ export default new Vue({
 
 ### SingleRoute
 
+Please pay attention to that there is a direcotry which wrapping the `Index.vue`,Do not name `vue` directly.It maybe not quite in the usual way
+
+The same, do not name the directory with `Index`, it may have diffrent sense on `Nested Route`
+
 If your directory just like this
 
 ```
