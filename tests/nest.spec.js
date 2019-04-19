@@ -86,4 +86,14 @@ describe('nestRoute', () => {
     );
     removeFile('nestT');
   });
+
+  it('mixed single and nested route', () => {
+    makeFile('nestT/test/index.vue');
+    makeFile('nestT/test/test.vue');
+    expect(() => {
+      testPlugin({ dir: 'tests/nestT', alias: '@/nestT' });
+    }).toThrow();
+    removeFile('nestT');
+    removeFile('nestT');
+  });
 });
