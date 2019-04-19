@@ -6,6 +6,11 @@ exports.warn = msg => {
   assert.fail(`\n\n\x1B[31mvue-router-invoke-webpack-plugin:${msg} \x1b[39m\n`);
 };
 
+exports.tips = msg => {
+  // eslint-disable-next-line
+  console.log(`\n\n\x1B[31mvue-router-invoke-webpack-plugin:${msg} \x1b[39m\n`);
+};
+
 exports.firstLowerCase = ([first, ...rest]) => {
   if (first === '_') {
     return first + rest.shift().toLowerCase() + rest.join('');

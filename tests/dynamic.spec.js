@@ -79,7 +79,7 @@ describe('dynamicRoute', () => {
 
   it('multiple', () => {
     makeFile('dynamicT/_dynamic_name/index.vue');
-    makeFile('dynamicT/_dynamic_name/_dynamic_inner.vue');
+    makeFile('dynamicT/_dynamic_name/_dynamic_inner/index.vue');
     testPlugin(
       { dir: 'tests/dynamicT', alias: '@/dynamicT' },
       `(name\\:\\'dynamicName\\',path\\:\\'\\/\\:dynamicName\\'|name\\:\\'dynamicName-dynamicInner\\',path\\:\\'\\/\\:dynamicName\\/\\:dynamicInner\\')`

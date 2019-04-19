@@ -32,6 +32,22 @@ function testPlugin(options, expectVal, notExpectVal) {
 }
 
 describe('singleRoute', () => {
+  it('root wrong name', () => {
+    makeFile('singleT/Login.vue');
+    expect(() => {
+      testPlugin({ dir: 'tests/singleT', alias: '@/singleT' });
+    }).toThrow();
+    removeFile('singleT/Login.vue');
+  });
+
+  it('child wrong name', () => {
+    makeFile('singleT/Child/Login.vue');
+    expect(() => {
+      testPlugin({ dir: 'tests/singleT', alias: '@/singleT' });
+    }).toThrow();
+    removeFile('singleT/Child/Login.vue');
+  });
+
   it('hump name', () => {
     makeFile('singleT/Login/Index.vue');
     testPlugin(

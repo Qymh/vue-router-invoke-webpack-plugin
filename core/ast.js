@@ -4,6 +4,7 @@ const fs = require('fs');
 const yamljs = require('yamljs');
 const {
   warn,
+  tips,
   camelize,
   replaceVue,
   firstLowerCase,
@@ -74,6 +75,7 @@ function init(options) {
     behavior = options.scrollBehavior.toString();
   }
   let modules = generateModules(options);
+  this.isFirst = this.isFirst !== false;
   this.metaYmlReg = '';
   this.routerDir = '';
   this.watchDir = '';
@@ -136,17 +138,51 @@ function generateFilesAst(dir, filesAst, parent) {
     }
     filesAst.push(curAst);
 
+    if (
+      this.ignoreRegExp.test(
+        curAst.parentName.length ? curAst.parentName.join('') : curAst.file
+      )
+    ) {
+      curAst.ignore = true;
+    }
+
     // fix empty vue
     if (
       curAst.isFile &&
       !(
         curAst.file === parent.file ||
         (curAst.file && curAst.file.toLowerCase() === 'index') ||
-        parent.file !== undefined ||
         (this.metaYmlReg && this.metaYmlReg.test(curAst.file))
       )
     ) {
-      curAst.ignore = true;
+      if (
+        !this.ignoreRegExp.test(
+          curAst.parentName.length ? curAst.parentName.join('') : curAst.file
+        )
+      ) {
+        // maybe node's bug must use twice to judge
+        if (
+          this.ignoreRegExp.test(
+            curAst.parentName.length ? curAst.parentName.join('') : curAst.file
+          )
+        ) {
+          curAst.ignore = true;
+        } else {
+          curAst.ignore = true;
+          tips(
+            `\n'${
+              curAst.alias
+            }'is not in accordance with the rules \n you can not name it directly without a file wraps it \n you may check the correct use in documentation https://github.com/Qymh/vue-router-invoke-webpack-plugin#singleroute\n or you should make sure you have set it in the ignore option`
+          );
+          if (this.isFirst) {
+            warn(
+              `\n'${
+                curAst.alias
+              }'is not in accordance with the rules \n you can not name it directly without a file wraps it \n you may check the correct use in documentation https://github.com/Qymh/vue-router-invoke-webpack-plugin#singleroute\n or you should make sure you have set it in the ignore option`
+            );
+          }
+        }
+      }
     }
 
     if (!curAst.isFile) {
@@ -179,31 +215,18 @@ function generateRouteString(filesAst, pre) {
     nestCollections = {};
   }
   for (const item of filesAst) {
-    if (
-      this.ignoreRegExp &&
-      (this.ignoreRegExp.test(item.file) ||
-        (item.parentName && this.ignoreRegExp.test(item.parentName.join(''))))
-    ) {
-    }
     // fix when non-compliance file
-    else if (item.ignore) {
+    if (item.ignore) {
     } else {
-      // maybe node's bug: must use twice to judge
-      if (
-        this.ignoreRegExp &&
-        (this.ignoreRegExp.test(item.file) ||
-          (item.parentName && this.ignoreRegExp.test(item.parentName.join(''))))
-      ) {
+      if (!item.isFile) {
+        generateRouteString.call(this, item.children, item);
       } else {
-        if (!item.isFile) {
-          generateRouteString.call(this, item.children, item);
+        if (this.metaYmlReg.test(item.file)) {
+          if (nestCollections[item.parentName.join('-')]) {
+            nestCollections[item.parentName.join('-')]--;
+          }
         } else {
-          if (this.metaYmlReg.test(item.file)) {
-            if (nestCollections[item.parentName.join('-')]) {
-              nestCollections[item.parentName.join('-')]--;
-            }
-          } else {
-            this.routeString += `
+          this.routeString += `
             {
               component: () => import('${item.alias}'),
               name:'${
@@ -214,66 +237,65 @@ function generateRouteString(filesAst, pre) {
                   : 'index'
               }',
               `;
-            if (item.meta) {
-              this.routeString += `meta:{`;
-              for (const meta of item.meta) {
-                for (const key in meta) {
-                  this.routeString += `${key}:'${meta[key]}',`;
-                }
+          if (item.meta) {
+            this.routeString += `meta:{`;
+            for (const meta of item.meta) {
+              for (const key in meta) {
+                this.routeString += `${key}:'${meta[key]}',`;
               }
-              this.routeString += `},`;
             }
-            if (Object.keys(nestCollections).length) {
-              const curNest = this.nestArr[this.nestArr.length - 1].split('-');
-              const res = diff(curNest, item.parentName);
-              this.routeString += `path:'${res.join('/')}',`;
-            } else {
-              this.routeString += `path:'/${item.parentName.join('/')}',`;
+            this.routeString += `},`;
+          }
+          if (Object.keys(nestCollections).length) {
+            const curNest = this.nestArr[this.nestArr.length - 1].split('-');
+            const res = diff(curNest, item.parentName);
+            this.routeString += `path:'${res.join('/')}',`;
+          } else {
+            this.routeString += `path:'/${item.parentName.join('/')}',`;
+          }
+          if (item.isNest) {
+            this.nestArr.push(item.parentName.join('-'));
+            // fix when directory is empty and non-compliance file
+            pre.children = pre.children.filter(v => {
+              return (v.children && v.children.length) !== 0 && !v.ignore;
+            });
+            nestCollections[item.parentName.join('-')] =
+              pre.children.length - 1;
+            this.routeString += `children:[`;
+            if (pre.children.length - 1 === 0) {
+              this.routeString += '],},';
             }
-            if (item.isNest) {
-              this.nestArr.push(item.parentName.join('-'));
-              // fix when directory is empty and non-compliance file
-              pre.children = pre.children.filter(v => {
-                return (v.children && v.children.length) !== 0 && !v.ignore;
-              });
-              nestCollections[item.parentName.join('-')] =
+          } else {
+            this.routeString += '},';
+          }
+          const isNestChild = this.nestArr.some(v =>
+            pre.parentName.join('-').includes(v)
+          );
+          if (isNestChild) {
+            this.nestArr.forEach(v => {
+              if (pre.parentName.join('-').includes(v)) {
+                nestCollections[v]--;
+              }
+            });
+            // fix when meta.yml is empty
+            if (item.meta !== undefined) {
+              nestCollections[pre.parentName.join('-')] -= 1;
+            }
+            // fix when nested route which has more than two childish routes
+            if (pre.children.length >= 2) {
+              nestCollections[pre.parentName.join('-')] +=
                 pre.children.length - 1;
-              this.routeString += `children:[`;
-              if (pre.children.length - 1 === 0) {
+            }
+            let count = 0;
+            for (const key in nestCollections) {
+              const val = nestCollections[key];
+              if (val === 0) {
+                count++;
                 this.routeString += '],},';
               }
-            } else {
-              this.routeString += '},';
             }
-            const isNestChild = this.nestArr.some(v =>
-              pre.parentName.join('-').includes(v)
-            );
-            if (isNestChild) {
-              this.nestArr.forEach(v => {
-                if (pre.parentName.join('-').includes(v)) {
-                  nestCollections[v]--;
-                }
-              });
-              // fix when meta.yml is empty
-              if (item.meta !== undefined) {
-                nestCollections[pre.parentName.join('-')] -= 1;
-              }
-              // fix when nested route which has more than two childish routes
-              if (pre.children.length >= 2) {
-                nestCollections[pre.parentName.join('-')] +=
-                  pre.children.length - 1;
-              }
-              let count = 0;
-              for (const key in nestCollections) {
-                const val = nestCollections[key];
-                if (val === 0) {
-                  count++;
-                  this.routeString += '],},';
-                }
-              }
-              if (count === Object.keys(nestCollections).length) {
-                nestCollections = {};
-              }
+            if (count === Object.keys(nestCollections).length) {
+              nestCollections = {};
             }
           }
         }

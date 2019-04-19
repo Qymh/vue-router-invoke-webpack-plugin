@@ -64,23 +64,34 @@ export const routes = [
   {
     component: () => import('@/src/Nest/Index.vue'),
     name: 'nest',
+    meta: { name: 'nest' },
     path: '/nest'
   },
   {
     component: () => import('@/src/Nest/Home/Home.vue'),
     name: 'nest-home',
-    meta: { name: 'home' },
     path: '/nest/home',
     children: [
       {
         component: () => import('@/src/Nest/Home/Account/Index.vue'),
         name: 'nest-home-account',
+        meta: { name: 'account' },
         path: 'account'
       },
       {
         component: () => import('@/src/Nest/Home/Account/_Id/Index.vue'),
         name: 'nest-home-account-id',
         path: 'account/:id'
+      },
+      {
+        component: () => import('@/src/Nest/Home/Infor/Index.vue'),
+        name: 'nest-home-infor',
+        path: 'infor'
+      },
+      {
+        component: () => import('@/src/Nest/Home/Test/Index.vue'),
+        name: 'nest-home-test',
+        path: 'test'
       }
     ]
   },

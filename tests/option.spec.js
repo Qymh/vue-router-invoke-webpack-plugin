@@ -77,7 +77,11 @@ describe('option', () => {
         }
       },
       plugins: [
-        new VueRouterInvokeWebpackPlugin({ dir: 'demos/src', alias: '@/src' })
+        new VueRouterInvokeWebpackPlugin({
+          dir: 'demos/src',
+          alias: '@/src',
+          ignore: 'notfound'
+        })
       ]
     });
     rimraf.sync(path.resolve(process.cwd(), '.invoke'));
@@ -115,6 +119,7 @@ describe('option', () => {
   });
 
   it('meta', () => {
+    removeFile('metaTest');
     makeFile('metaTest/login/Index.vue');
     makeFile('metaTest/login/meta.yml');
     writeFile(
@@ -126,6 +131,34 @@ describe('option', () => {
     );
     testPlugin(
       { dir: 'tests/metaTest', alias: '@/metaTest' },
+      `meta\\:\\{name\\:\\'metaTest\\'`
+    );
+    removeFile('metaTest');
+  });
+
+  it('empty meta', () => {
+    removeFile('metaTest');
+    makeFile('metaTest/home/home.vue');
+    makeFile('metaTest/home/login/index.vue');
+    makeFile('metaTest/home/login/meta.yml');
+    testPlugin(
+      { dir: 'tests/metaTest', alias: '@/metaTest' },
+      '',
+      `meta\\:\\{name\\:\\'metaTest\\'`
+    );
+    removeFile('metaTest');
+  });
+
+  it('multiple meta', () => {
+    removeFile('metaTest');
+    makeFile('metaTest/home/home.vue');
+    makeFile('metaTest/home/inner/inner.vue');
+    makeFile('metaTest/home/inner/test/index.vue');
+    makeFile('metaTest/home/inner/testt/index.vue');
+    makeFile('metaTest/home/inner/meta.yml');
+    testPlugin(
+      { dir: 'tests/metaTest', alias: '@/metaTest' },
+      '',
       `meta\\:\\{name\\:\\'metaTest\\'`
     );
     removeFile('metaTest');

@@ -22,9 +22,11 @@ function writeFile(options) {
     }
     fs.writeFileSync(this.routerDir, this.routeString);
     isRunning = false;
+    this.isFirst = false;
   } else {
     fs.writeFileSync(this.routerDir, this.routeString);
     isRunning = false;
+    this.isFirst = false;
   }
 }
 
