@@ -187,6 +187,14 @@ Please pay attention to that there is a direcotry which wrapping the `Index.vue`
 
 The same, do not name the directory with `Index`, it may have diffrent sense on `Nested Route`
 
+If your version > 0.2.6, The plugin will throw an error when the wrong naming of the directory in production environment and will show you a danger notice in development environment
+
+So if you see that
+
+![image](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/master/docs/images/name.png)
+
+The rule of naming about your directory maybe wrong
+
 If your directory just like this
 
 ```
