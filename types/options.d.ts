@@ -3,7 +3,6 @@ import Vue from 'vue';
 
 type mode = 'hash' | 'history';
 type language = 'javascript' | 'typescript';
-type RawLocation = string | Location;
 type Position = { x: number; y: number };
 type PositionResult = Position | { selector: string; offset?: Position } | void;
 
