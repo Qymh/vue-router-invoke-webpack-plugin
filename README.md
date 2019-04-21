@@ -26,27 +26,9 @@ cnpm install vue-router-invoke-webpack-plugin -D
 yarn add vue-router-invoke-webpack-plugin -D
 ```
 
-## why use `vue-router-invoke-webpack-plugin`
+## What is Automatic Generate Routes
 
-In a `Single Page App`. `vue-router` will be used as a plugin to change route.The last generated `router.js` will be complex when there are more than fifty or sixty pages.To be friendly, we will split routes by function, the route which has same function will be put into one directory. That is what we did before.But later we found same problems especially when there are many people working together.
-
-- the rule of naming
-
-no universal name
-
-![image](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/master/docs/images/name.png)
-
-- no specific hierarchy
-
-The hierarchy of the route maybe second or third, but put them into one direcotry with the route which is first hierarchy.And we can't differentiate the hierarchy
-
-![image](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/master/docs/images/index_en.png)
-
-- new people find it hard to accept
-
-The generated routes are so complex,the naming of the rule doesn't have the semantization,and can't differentiate the hierarchy
-
-Actually,The first and second problem can be resolved by `code review`.But it maybe coast many time,So we learn the generating of route from [nuxt](https://nuxtjs.org/guide/routing), we use the `hierarchy` instead `function` to split routes. And we resolved the problems.
+Routing automatic injection refers to according to the format of the file directory to automatically generate the corresponding `router.js`, every time without the need to create a module to reference manual
 
 ## Usage
 
