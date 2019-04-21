@@ -2,7 +2,7 @@
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/Qymh/vue-router-invoke-webpack-plugin.svg)](https://greenkeeper.io/)
 
-[中文版本](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/master/docs/zh_CN/README.md)
+[中文版本](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/dev/docs/zh_CN/README.md)
 
 Automatic generate the routes of `vue-router` based on the file directory.
 
