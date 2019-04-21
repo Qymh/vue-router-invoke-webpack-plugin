@@ -22,27 +22,9 @@ cnpm install vue-router-invoke-webpack-plugin -D
 yarn add vue-router-invoke-webpack-plugin -D
 ```
 
-## 为什么使用`vue-router-invoke-webpack-plugin`
+## 什么是路由自动注入
 
-在单页面我们会使用`vue-router`作为路由切换的插件,但当你的页面过多比如有 50 或者 60 个页面的时候,你的`vue`文件和最后写入的`router.js`会很复杂.为了更友好的应对我们会把页面按功能分一下,相同功能的页面放在一个文件夹中,之前我们也是这么做的,但后来发现了很多问题,特别是项目在多人合作的时候
-
-- 命名规则
-
-没有统一的命名,有人喜欢下划线,有人喜欢用驼峰
-
-![image](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/master/docs/images/name.png)
-
-- 路由的层级
-
-明明是二级路由或者三级路由,放在了和一级路由一个目录下,且命名完全看不出来路由的层级
-
-![image](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/master/docs/images/index_cn.png)
-
-- 新人难以接受
-
-生成的路由太过复杂,且命名不够语义化,无法区分页面层级
-
-其实第一二种问题完全是可以通过`code review`去解决的,但`code review`会有一定的成本,所以我们学习了 [nuxt](https://zh.nuxtjs.org/guide/routing) 中的路由构建,我们不以`页面功能`去区分路由,而是根据文件目录结构以`路由层级`去划分路由,解决了以上三个问题
+路由自动注入是指根据文件目录的格式自动生成对应的`router.js`, 而不需要每次创建模块都去手动引用
 
 ## 用法
 
