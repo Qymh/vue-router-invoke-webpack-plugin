@@ -24,9 +24,9 @@ function testPlugin(options, expectVal, notExpectVal) {
     );
     file = file.replace(/\s/g, '');
     if (expectVal) {
-      expect(new RegExp(expectVal, 'gi').test(file)).toBeTruthy();
+      expect(new RegExp(expectVal, 'i').test(file)).toBeTruthy();
     } else {
-      expect(new RegExp(notExpectVal, 'gi').test(file)).toBeFalsy();
+      expect(new RegExp(notExpectVal, 'i').test(file)).toBeFalsy();
     }
   }
 }

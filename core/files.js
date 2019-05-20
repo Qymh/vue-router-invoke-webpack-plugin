@@ -71,7 +71,7 @@ exports.generateIgnoreFiles = function(options) {
     ? [...options.ignore, '.dsstore']
     : ['.dsstore'];
   options.ignore = options.ignore.map(replaceVue);
-  let reg = new RegExp(`(${options.ignore.join('|')})`, 'ig');
+  let reg = new RegExp(`(${options.ignore.join('|')})`, 'i');
   this.ignoreRegExp = reg;
 };
 

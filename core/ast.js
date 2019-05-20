@@ -38,7 +38,7 @@ function sortByIsFile(arr) {
 }
 
 function generateYmlReg(meta) {
-  this.metaYmlReg = new RegExp(`^${meta}\\.yml$`, 'gi');
+  this.metaYmlReg = new RegExp(`^${meta}\\.yml$`, 'i');
 }
 
 let nestCollections = {};
