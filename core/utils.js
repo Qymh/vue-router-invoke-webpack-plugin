@@ -20,7 +20,7 @@ exports.firstLowerCase = ([first, ...rest]) => {
 };
 
 exports.replaceAlias = (str, dir) => {
-  return str.replace(new RegExp(dir, 'gi'), '');
+  return str.replace(new RegExp(dir, 'i'), '');
 };
 
 exports.replaceVue = str => str.replace(/\.vue/g, '');
