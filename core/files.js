@@ -40,8 +40,8 @@ function writeFile(options) {
 function watchFile(options, start) {
   writeFile.call(this, options);
   const watcher = chokidar.watch(this.watchDir, { persistent: true });
-  watcher.on('raw', event => {
-    if (event === 'modified' || isRunning) {
+  watcher.on('raw', (event, path) => {
+    if ((event === 'modified' && !/\.yml$/.test(path)) || isRunning) {
       return;
     }
     isRunning = true;

@@ -121,6 +121,7 @@ function generateFilesAst(dir, filesAst, parent) {
       parent.children.map(v => {
         if (!this.metaYmlReg.test(v.file) && v.isFile) {
           v.meta = ymlObj && ymlObj.meta;
+          v.redirect = ymlObj && ymlObj.redirect;
         }
       });
     }
@@ -249,6 +250,15 @@ function generateRouteString(filesAst, pre) {
             for (const meta of item.meta) {
               for (const key in meta) {
                 this.routeString += `${key}:'${meta[key]}',`;
+              }
+            }
+            this.routeString += `},`;
+          }
+          if (item.redirect) {
+            this.routeString += `redirect:{`;
+            for (const redirect of item.redirect) {
+              for (const key in redirect) {
+                this.routeString += `${key}:'${redirect[key]}',`;
               }
             }
             this.routeString += `},`;

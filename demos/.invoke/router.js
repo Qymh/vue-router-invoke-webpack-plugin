@@ -113,6 +113,9 @@ export const routes = [{
     meta: {
       name: 'user',
     },
+    redirect: {
+      path: '/another',
+    },
     path: '/single/userName',
   },
   {

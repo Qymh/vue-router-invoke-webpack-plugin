@@ -616,6 +616,48 @@ automatical generated route will be this
 }
 ```
 
+#### Redirect In yml
+
+> Feature In `0.4.0`
+
+you can add redirect path by using `yml`
+
+For example
+
+```javascript
+src/views
+├── Single
+│   ├── Index.vue
+│   └── User
+│       ├── Index.vue
+│       └── meta.yml
+```
+
+`meta.yml`
+
+```yml
+redirect:
+  - path: /test
+```
+
+automatical generated route will be this
+
+```javascript
+{
+  component: () => import('@/views/Single/Index.vue'),
+  name: 'single',
+  path: 'single'
+},
+{
+  component: () => import('@/views/Single/User/Index.vue'),
+  name: 'single-user',
+  path: 'single/user',
+  redirect: {
+    path: '/test'
+  },
+}
+```
+
 ### Modules
 
 The generated `router.js` has Two modules

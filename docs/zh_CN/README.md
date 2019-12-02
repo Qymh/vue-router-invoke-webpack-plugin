@@ -600,6 +600,46 @@ plugins: [
 }
 ```
 
+#### 重定向yml配置
+
+> '0.4.0'版本之后 你可以在yml中配置重定向
+
+举个列子
+
+```javascript
+src/views
+├── Single
+│   ├── Index.vue
+│   └── User
+│       ├── Index.vue
+│       └── meta.yml
+```
+
+`meta.yml`
+
+```yml
+redirect:
+  - path: /test
+```
+
+自动生成的路由会变成这样
+
+```javascript
+{
+  component: () => import('@/views/Single/Index.vue'),
+  name: 'single',
+  path: 'single'
+},
+{
+  component: () => import('@/views/Single/User/Index.vue'),
+  name: 'single-user',
+  path: 'single/user',
+  redirect: {
+    path: '/test'
+  },
+}
+```
+
 ### 模块
 
 自动生成的`router.js`有两个模块 `vue` `vue-router`
