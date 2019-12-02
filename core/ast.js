@@ -21,14 +21,14 @@ const {
   generateIgnoreFiles,
   generateModules
 } = require('./files');
-let routeStringPreJs = modules =>
+const routeStringPreJs = modules =>
   `import Vue from 'vue';import Router from 'vue-router';${modules};Vue.use(Router);export const routes = [`;
-let routeStringPreTs = modules =>
+const routeStringPreTs = modules =>
   `import Vue from 'vue';import Router, { RouteConfig } from 'vue-router';${modules};Vue.use(Router);export const routes: RouteConfig[] = [`;
-let routeStringPostFn = (mode, behavior) =>
+const routeStringPostFn = (mode, behavior) =>
   `];const router = new Router({mode: '${mode}',routes,${behavior &&
     'scrollBehavior:' + behavior}});`;
-let routeStringExport = 'export default router;';
+const routeStringExport = 'export default router;';
 
 const modeMap = makeMap('hash,history');
 const languageMap = makeMap('javascript,typescript');
@@ -47,9 +47,9 @@ let nestCollections = {};
  * @param {Object} options
  */
 function init(options) {
-  let mode = options.mode || 'history';
-  let language = options.language || 'javascript';
-  let meta = options.meta || 'meta';
+  const mode = options.mode || 'history';
+  const language = options.language || 'javascript';
+  const meta = options.meta || 'meta';
   if (!modeMap(mode)) {
     warn(
       `the mode can only be hash or history, make sure you have set the value correctly`
@@ -65,16 +65,14 @@ function init(options) {
   }
   if (!options.alias) {
     warn(
-      `the alias option is required, make sure you have set the alias of the dir option: ${
-        options.dir
-      } `
+      `the alias option is required, make sure you have set the alias of the dir option: ${options.dir} `
     );
   }
   let behavior = '';
   if (options.scrollBehavior) {
     behavior = options.scrollBehavior.toString();
   }
-  let modules = generateModules(options);
+  const modules = generateModules(options);
   this.isFirst = this.isFirst !== false;
   this.metaYmlReg = '';
   this.routerDir = '';
@@ -273,6 +271,7 @@ function generateRouteString(filesAst, pre) {
             this.routeString += `children:[`;
             if (pre.children.length - 1 === 0) {
               this.routeString += '],},';
+              nestCollections[item.parentName.join('-')]--;
             }
           } else {
             this.routeString += '},';
