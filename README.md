@@ -1,7 +1,5 @@
 # vue-router-invoke-webpack-plugin
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/Qymh/vue-router-invoke-webpack-plugin.svg)](https://greenkeeper.io/)
-
 [中文版本](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/dev/docs/zh_CN/README.md)
 
 Automatic generate the routes of `vue-router` based on the file directory.
@@ -613,6 +611,48 @@ automatical generated route will be this
 {
   path: '/demo',
   redirect: '/test'
+}
+```
+
+#### Redirect In yml
+
+> Feature In `0.4.0`
+
+you can add redirect path by using `yml`
+
+For example
+
+```javascript
+src/views
+├── Single
+│   ├── Index.vue
+│   └── User
+│       ├── Index.vue
+│       └── meta.yml
+```
+
+`meta.yml`
+
+```yml
+redirect:
+  - path: /test
+```
+
+automatical generated route will be this
+
+```javascript
+{
+  component: () => import('@/views/Single/Index.vue'),
+  name: 'single',
+  path: 'single'
+},
+{
+  component: () => import('@/views/Single/User/Index.vue'),
+  name: 'single-user',
+  path: 'single/user',
+  redirect: {
+    path: '/test'
+  },
 }
 ```
 

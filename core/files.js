@@ -3,6 +3,7 @@
 const fs = require('fs');
 const fse = require('fs-extra');
 const chokidar = require('chokidar');
+const beautify = require('js-beautify').js;
 const { replaceVue } = require('./utils');
 const isFile = dir => fs.statSync(dir).isFile();
 
@@ -20,11 +21,17 @@ function writeFile(options) {
     } else {
       fse.ensureDirSync(`${root}/.invoke`);
     }
-    fs.writeFileSync(this.routerDir, this.routeString);
+    fs.writeFileSync(
+      this.routerDir,
+      beautify(this.routeString, { indent_size: 2, space_in_empty_paren: true })
+    );
     isRunning = false;
     this.isFirst = false;
   } else {
-    fs.writeFileSync(this.routerDir, this.routeString);
+    fs.writeFileSync(
+      this.routerDir,
+      beautify(this.routeString, { indent_size: 2, space_in_empty_paren: true })
+    );
     isRunning = false;
     this.isFirst = false;
   }
@@ -32,9 +39,9 @@ function writeFile(options) {
 
 function watchFile(options, start) {
   writeFile.call(this, options);
-  let watcher = chokidar.watch(this.watchDir, { persistent: true });
-  watcher.on('raw', event => {
-    if (event === 'modified' || isRunning) {
+  const watcher = chokidar.watch(this.watchDir, { persistent: true });
+  watcher.on('raw', (event, path) => {
+    if ((event === 'modified' && !/\.yml$/.test(path)) || isRunning) {
       return;
     }
     isRunning = true;
@@ -49,8 +56,8 @@ exports.writeOrWatchFile = function(options, start) {
 };
 
 exports.getRouterDir = function(options) {
-  let routerDir = options.routerDir;
-  let ext = options.language
+  const routerDir = options.routerDir;
+  const ext = options.language
     ? options.language === 'javascript'
       ? '.js'
       : '.ts'
@@ -71,7 +78,7 @@ exports.generateIgnoreFiles = function(options) {
     ? [...options.ignore, '.dsstore']
     : ['.dsstore'];
   options.ignore = options.ignore.map(replaceVue);
-  let reg = new RegExp(`(${options.ignore.join('|')})`, 'i');
+  const reg = new RegExp(`(${options.ignore.join('|')})`, 'i');
   this.ignoreRegExp = reg;
 };
 
