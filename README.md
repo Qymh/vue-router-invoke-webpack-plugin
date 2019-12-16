@@ -472,6 +472,8 @@ automatical generated route will be this
 }
 ```
 
+> Version greater than 0.4.1, meta's type supports `boolean` `string` `array` `plain object`, but it doesn't support `Symbol` `function` `undefined` `circled object` that can't be translated by `JSON.stringify`
+
 ## Special Options
 
 ### NotFound
