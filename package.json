@@ -36,6 +36,7 @@
     "commit": "git cz"
   },
   "dependencies": {
+    "js-yaml": "^3.13.1",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {

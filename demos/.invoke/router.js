@@ -114,7 +114,7 @@ export const routes = [{
       name: 'user',
     },
     redirect: {
-      path: '/another',
+      path: 'true',
     },
     path: '/single/userName',
   },
