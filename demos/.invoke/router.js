@@ -65,6 +65,7 @@ export const routes = [{
     name: 'nest',
     meta: {
       name: 'nest',
+      bool: true,
     },
     path: '/nest',
   },
@@ -114,7 +115,7 @@ export const routes = [{
       name: 'user',
     },
     redirect: {
-      path: 'true',
+      path: '/another',
     },
     path: '/single/userName',
   },
