@@ -1,7 +1,7 @@
 'use strict';
 
 const fs = require('fs');
-const yamljs = require('yamljs');
+const yamljs = require('js-yaml');
 const {
   warn,
   tips,
@@ -117,7 +117,13 @@ function generateFilesAst(dir, filesAst, parent) {
     const curDir = `${root}/${dir}/${file}`;
     if (this.metaYmlReg.test(file)) {
       const ymlStr = fs.readFileSync(curDir, 'utf8');
-      const ymlObj = yamljs.parse(ymlStr);
+      let ymlObj;
+      try {
+        ymlObj = yamljs.load(ymlStr);
+      } catch (error) {
+        tips(error.message);
+        ymlObj = undefined;
+      }
       parent.children.map(v => {
         if (!this.metaYmlReg.test(v.file) && v.isFile) {
           v.meta = ymlObj && ymlObj.meta;
@@ -214,6 +220,23 @@ function sortFilesAst(filesAst) {
 }
 
 /**
+ * keep original value
+ * @param {string} key
+ * @param {any} value
+ */
+function handleKeyValueType(key, value) {
+  const type = typeof value;
+  switch (type) {
+    case 'object':
+      return `${key}: ${JSON.stringify(value)},`;
+    case 'string':
+      return `${key}: '${value}',`;
+    default:
+      return `${key}: ${value},`;
+  }
+}
+
+/**
  *
  * @param {Array} filesAst
  * @param {Object} pre
@@ -249,7 +272,7 @@ function generateRouteString(filesAst, pre) {
             this.routeString += `meta:{`;
             for (const meta of item.meta) {
               for (const key in meta) {
-                this.routeString += `${key}:'${meta[key]}',`;
+                this.routeString += handleKeyValueType(key, meta[key]);
               }
             }
             this.routeString += `},`;

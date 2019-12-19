@@ -1,5 +1,7 @@
 # vue-router-invoke-webpack-plugin
 
+[CHANGELOG](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/dev/CHANGELOG.md)
+
 [中文版本](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/dev/docs/zh_CN/README.md)
 
 Automatic generate the routes of `vue-router` based on the file directory.
@@ -471,6 +473,8 @@ automatical generated route will be this
   path: 'single/user'
 }
 ```
+
+> Version greater than 0.4.1, meta's type supports `boolean` `string` `array` `plain object`, but it doesn't support `Symbol` `function` `undefined` `circled object` that can't be translated by `JSON.stringify`
 
 ## Special Options
 

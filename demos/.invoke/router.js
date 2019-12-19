@@ -65,6 +65,7 @@ export const routes = [{
     name: 'nest',
     meta: {
       name: 'nest',
+      bool: true,
     },
     path: '/nest',
   },

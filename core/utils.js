@@ -45,3 +45,5 @@ exports.diff = (a, b) => {
   const aSet = new Set(a);
   return b.filter(v => !aSet.has(v));
 };
+
+exports.toPlain = value => Object.prototype.toString.call(value).slice(8, -1);

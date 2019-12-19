@@ -136,6 +136,24 @@ describe('option', () => {
     removeFile('metaTest');
   });
 
+  it('boolean smeta', () => {
+    removeFile('metaTest');
+    makeFile('metaTest/login/Index.vue');
+    makeFile('metaTest/login/meta.yml');
+    writeFile(
+      'metaTest/login/meta.yml',
+      `
+      meta:
+        - name: true
+    `
+    );
+    testPlugin(
+      { dir: 'tests/metaTest', alias: '@/metaTest' },
+      `meta\\:\\{name\\:true`
+    );
+    removeFile('metaTest');
+  });
+
   it('redirect', () => {
     removeFile('metaTest');
     makeFile('metaTest/login/Index.vue');
