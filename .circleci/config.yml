@@ -15,3 +15,4 @@ jobs:
           key: vue-router-invoke-webpack-plugin-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run: npm run lint
       - run: npm run test:single
+      - run: npm run test:ci
