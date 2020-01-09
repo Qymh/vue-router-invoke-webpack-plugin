@@ -1,5 +1,10 @@
 # vue-router-invoke-webpack-plugin
 
+![](https://img.shields.io/codecov/c/github/qymh/vue-router-invoke-webpack-plugin)
+![](https://img.shields.io/npm/dm/vue-router-invoke-webpack-plugin)
+![](https://img.shields.io/npm/v/vue-router-invoke-webpack-plugin)
+![](https://img.shields.io/npm/l/vue-router-invoke-webpack-plugin)
+
 [CHANGELOG](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/dev/CHANGELOG.md)
 
 [中文版本](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/dev/docs/zh_CN/README.md)
