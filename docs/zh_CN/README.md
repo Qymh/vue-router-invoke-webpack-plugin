@@ -1,5 +1,10 @@
 # vue-router-invoke-webpack-plugin
 
+![](https://img.shields.io/codecov/c/github/qymh/vue-router-invoke-webpack-plugin)
+![](https://img.shields.io/npm/dm/vue-router-invoke-webpack-plugin)
+![](https://img.shields.io/npm/v/vue-router-invoke-webpack-plugin)
+![](https://img.shields.io/npm/l/vue-router-invoke-webpack-plugin)
+
 根据文件格式自动生成`vue-router`的路由
 
 ## 下载
