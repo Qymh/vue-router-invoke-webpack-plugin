@@ -37,6 +37,7 @@
     "commit": "git cz"
   },
   "dependencies": {
+    "js-beautify": "^1.10.2",
     "js-yaml": "^3.13.1",
     "yamljs": "^0.3.0"
   },
@@ -66,7 +67,6 @@
     "husky": "^3.1.0",
     "inquirer": "^7.0.1",
     "jest": "^24.9.0",
-    "js-beautify": "^1.10.2",
     "lint-staged": "^9.5.0",
     "progress-bar-webpack-plugin": "^1.12.1",
     "rimraf": "^3.0.0",
