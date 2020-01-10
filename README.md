@@ -540,6 +540,8 @@ If your set options like this
 
 `images` `components` `template.vue` will not be resolved by the plugin
 
+Above Version `0.4.3` you can use `RegExp` to ignore files
+
 And the value ignore case
 
 ```javascript
@@ -548,7 +550,7 @@ plugins: [
     dir: 'src/views',
     alias: '@/views',
     language: 'javascript',
-    ignore: ['images', 'components', 'template.vue']
+    ignore: ['images', 'components', 'template.vue', /\.scss$/]
   })
 ];
 ```
@@ -560,6 +562,7 @@ src
 ├── views
 │   ├── Login
 │   │   └── Index.vue
+│   │   └── Index.scss
 │   ├── Template.vue
 │   └── User
 │       ├── Components

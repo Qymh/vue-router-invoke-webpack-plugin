@@ -4,7 +4,7 @@ const fs = require('fs');
 const fse = require('fs-extra');
 const chokidar = require('chokidar');
 const beautify = require('js-beautify').js;
-const { replaceVue } = require('./utils');
+const { toPlain } = require('./utils');
 const isFile = dir => fs.statSync(dir).isFile();
 
 let isRunning = false;
@@ -77,7 +77,13 @@ exports.generateIgnoreFiles = function(options) {
   options.ignore = options.ignore
     ? [...options.ignore, '.dsstore']
     : ['.dsstore'];
-  options.ignore = options.ignore.map(replaceVue);
+  options.ignore = options.ignore.map(v => {
+    if (toPlain(v) === 'RegExp') {
+      return v.toString().replace(/(\/)\B/g, '');
+    } else if (v) {
+      return v;
+    }
+  });
   const reg = new RegExp(`(${options.ignore.join('|')})`, 'i');
   this.ignoreRegExp = reg;
 };

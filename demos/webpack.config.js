@@ -41,7 +41,13 @@ const base = {
       alias: '@/src',
       language: 'javascript',
       routerDir: 'demos',
-      ignore: ['images', 'template.vue', 'components', 'notfound.vue'],
+      ignore: [
+        'images',
+        'template.vue',
+        'components',
+        'notfound.vue',
+        /\.scss$/
+      ],
       notFound: '@/src/NotFound.vue',
       modules: [
         {

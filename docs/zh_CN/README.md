@@ -526,8 +526,6 @@ src
 
 ### 忽略文件和文件夹
 
-假设你的设置是这样
-
 ```javascript
 plugins: [
   new VueRouterInvokeWebpackPlugin({
@@ -541,6 +539,19 @@ plugins: [
 
 自动构建的路由将会不区分大小写的忽略掉`images` `components` `template.vue`
 
+在版本`0.4.3` 之上 你也可以在ignore中定义正则来匹配文件
+
+```javascript
+plugins: [
+  new VueRouterInvokeWebpackPlugin({
+    dir: 'src/views',
+    alias: '@/views',
+    language: 'javascript',
+    ignore: ['images', 'components', 'template.vue', /\.scss$/]
+  })
+];
+```
+
 the directory
 
 ```
@@ -548,6 +559,7 @@ src
 ├── views
 │   ├── Login
 │   │   └── Index.vue
+│   │   └── Index.scss
 │   ├── Template.vue
 │   └── User
 │       ├── Components
