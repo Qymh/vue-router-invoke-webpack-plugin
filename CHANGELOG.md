@@ -1,3 +1,18 @@
+## [0.4.3](https://github.com/Qymh/vue-router-invoke-webpack-plugin/compare/v0.4.2...v0.4.3) (2020-01-10)
+
+
+### Bug Fixes
+
+* 🐛 wrong test in circleci ([4dc5542](https://github.com/Qymh/vue-router-invoke-webpack-plugin/commit/4dc5542ff45377e159c14468a3cf850296df26ac))
+
+
+### Features
+
+* 🎸 add codecov ([675c5e5](https://github.com/Qymh/vue-router-invoke-webpack-plugin/commit/675c5e5c06030fe09b1658fe60fa8454d397db41))
+* 🎸 add regexp to set ignore options ([#25](https://github.com/Qymh/vue-router-invoke-webpack-plugin/issues/25)) ([189a5a4](https://github.com/Qymh/vue-router-invoke-webpack-plugin/commit/189a5a46d4e3f7bf5143426ffb388c5e37760056))
+
+
+
 ## [0.4.2](https://github.com/Qymh/vue-router-invoke-webpack-plugin/compare/v0.4.1...v0.4.2) (2020-01-09)
 
 
