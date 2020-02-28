@@ -17,9 +17,25 @@ export const routes = [{
     name: 'complex-home',
     path: '/complex/home',
     children: [{
-        component: () => import('@/src/Complex/Home/Account/Index.vue'),
+        component: () => import('@/src/Complex/Home/Account/Account.vue'),
         name: 'complex-home-account',
         path: 'account',
+        children: [{
+            component: () => import('@/src/Complex/Home/Account/Chunk/Index.vue'),
+            name: 'complex-home-account-chunk',
+            path: 'chunk',
+          },
+          {
+            component: () => import('@/src/Complex/Home/Account/Inner/Index.vue'),
+            name: 'complex-home-account-inner',
+            path: 'inner',
+          },
+          {
+            component: () => import('@/src/Complex/Home/Account/_Dynamic/Index.vue'),
+            name: 'complex-home-account-dynamic',
+            path: ':dynamic',
+          },
+        ],
       },
       {
         component: () => import('@/src/Complex/Home/Details/Details.vue'),

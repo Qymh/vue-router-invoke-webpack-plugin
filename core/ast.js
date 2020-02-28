@@ -310,16 +310,12 @@ function generateRouteString(filesAst, pre) {
               nestCollections[pre.parentName.join('-')] +=
                 pre.children.length - 1;
             }
-            let count = 0;
             for (const key in nestCollections) {
               const val = nestCollections[key];
               if (val === 0) {
-                count++;
+                delete nestCollections[key];
                 this.routeString += '],},';
               }
-            }
-            if (count === Object.keys(nestCollections).length) {
-              nestCollections = {};
             }
           }
         }
