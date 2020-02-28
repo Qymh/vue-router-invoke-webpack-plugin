@@ -1,3 +1,12 @@
+## [0.4.4](https://github.com/Qymh/vue-router-invoke-webpack-plugin/compare/v0.4.3...v0.4.4) (2020-02-28)
+
+
+### Bug Fixes
+
+* 🐛 wrong generation when multistage nested routes exist ([#27](https://github.com/Qymh/vue-router-invoke-webpack-plugin/issues/27)) ([6977b0f](https://github.com/Qymh/vue-router-invoke-webpack-plugin/commit/6977b0fb31f013b0225a1d750676f1d408a09401))
+
+
+
 ## [0.4.3](https://github.com/Qymh/vue-router-invoke-webpack-plugin/compare/v0.4.2...v0.4.3) (2020-01-10)
 
 
