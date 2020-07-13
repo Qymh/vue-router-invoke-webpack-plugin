@@ -5,6 +5,8 @@
 ![](https://img.shields.io/npm/v/vue-router-invoke-webpack-plugin)
 ![](https://img.shields.io/npm/l/vue-router-invoke-webpack-plugin)
 
+> `typescript`重写且同时支持 vue2.x 和 vue3.x 的新版本 [vue-router-invoke-next-webpack-plugin](https://github.com/Qymh/vue-router-invoke-next-webpack-plugin)
+
 根据文件格式自动生成`vue-router`的路由
 
 ## 下载

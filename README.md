@@ -5,6 +5,8 @@
 ![](https://img.shields.io/npm/v/vue-router-invoke-webpack-plugin)
 ![](https://img.shields.io/npm/l/vue-router-invoke-webpack-plugin)
 
+> a new version has been rewritten by `typescript` [vue-router-invoke-next-webpack-plugin](https://github.com/Qymh/vue-router-invoke-next-webpack-plugin) both supported vue2.x and vue3.x
+
 [CHANGELOG](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/dev/CHANGELOG.md)
 
 [中文版本](https://github.com/Qymh/vue-router-invoke-webpack-plugin/blob/dev/docs/zh_CN/README.md)
